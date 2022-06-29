@@ -1,0 +1,12 @@
+# ninja log v5
+34	76	1656443248985951510	ClientInjector	5057c814deb40178
+2	788	1656458067049676973	CMakeFiles/ClientInjector.dir/src/ClientInjector.cpp.o	daf4ce0b848a96fb
+2	628	1656443128159459354	CMakeFiles/ClientInjector.dir/src/library.cpp.o	5e77980fa27971df
+16	71	1656458385660643241	build.ninja	37ad0a991a8bf460
+8	118	1656457859930291447	CMakeFiles/ClientInjector.dir/src/macOS/mach_inject.c.o	fc968503e15eb51b
+0	15	0	/Users/Corban/Desktop/development/cero-project/ClientInjector/cmake-build-debug/CMakeFiles/cmake.verify_globs	7f59741cf0b072a1
+790	876	1656458067139722804	/Users/Corban/Desktop/development/cero-project/build/bin/ClientInjector	5c7f2283b39c00e
+15	72	1656458385660643241	build.ninja	37ad0a991a8bf460
+0	14	0	/Users/Corban/Desktop/development/cero-project/ClientInjector/cmake-build-debug/CMakeFiles/cmake.verify_globs	7f59741cf0b072a1
+4	817	1656458386496485672	CMakeFiles/ClientInjector.dir/src/ClientInjector.cpp.o	daf4ce0b848a96fb
+817	876	1656458386559285570	/Users/Corban/Desktop/development/cero-project/build/bin/ClientInjector	5c7f2283b39c00e

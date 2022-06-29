@@ -1,0 +1,11 @@
+# ninja log v5
+2	14	0	/Users/Corban/Desktop/development/cero-project/ClientLoader/cmake-build-debug/CMakeFiles/cmake.verify_globs	4df5d69b8e95a25a
+2	663	1656441423104363257	CMakeFiles/ClientLoader.dir/src/library.cpp.o	76a04e7290660fc2
+0	667	1656439623656978997	CMakeFiles/ClientLoader.dir/library.cpp.o	9313b276db9c9822
+0	597	1656442897846789192	CMakeFiles/ClientLoader.dir/src/folder/library.cpp.o	ddc1af7f8ed12fb4
+597	638	1656442897890449951	/Users/Corban/Desktop/development/cero-project/build/bin/libClientLoader.dylib	d28aa3b343e62f52
+12	103	1656458382938896736	build.ninja	c915a746d4882676
+15	262	1656458382938896736	build.ninja	c915a746d4882676
+0	14	0	/Users/Corban/Desktop/development/cero-project/ClientLoader/cmake-build-debug/CMakeFiles/cmake.verify_globs	4df5d69b8e95a25a
+2	639	1656458383596836225	CMakeFiles/ClientLoader.dir/src/folder/library.cpp.o	8be926897f199e4d
+639	681	1656458383643744095	/Users/Corban/Desktop/development/cero-project/build/bin/libClientLoader.dylib	d28aa3b343e62f52

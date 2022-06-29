@@ -1,0 +1,8 @@
+//
+// Created by 0x41c on 2022-06-28.
+//
+
+#ifndef CLIENTINJECTOR_CLIENTINJECTOR_H
+#define CLIENTINJECTOR_CLIENTINJECTOR_H
+#include <commons.h>
+#endif //CLIENTINJECTOR_CLIENTINJECTOR_H

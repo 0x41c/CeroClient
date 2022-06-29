@@ -1,0 +1,3 @@
+/Users/Corban/Desktop/development/cero-project/ClientInjector/cmake-build-debug/CMakeFiles/ClientInjector.dir
+/Users/Corban/Desktop/development/cero-project/ClientInjector/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/Corban/Desktop/development/cero-project/ClientInjector/cmake-build-debug/CMakeFiles/rebuild_cache.dir

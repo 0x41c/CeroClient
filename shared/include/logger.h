@@ -12,21 +12,15 @@ using namespace filesystem;
 class Logger {
 
 public:
-    Logger(const string& loggerName) {
-        m_name = "CeroClient/" + loggerName;
 
-        string sep = path_sep;
-        string path = getHomePath();
+    static Logger& get(const string& name) {
+        static Logger logger(name);
+        return logger;
+    }
 
-        string logsPath = path + sep + HOMEDIR_LOG_NAME;
-        Ensure(logsPath);
-
-        string currentLogsFile = logsPath + sep + "current.log";
-        EnsureD(currentLogsFile);
-        Ensure(currentLogsFile);
-
-        m_filePath = currentLogsFile;
-    };
+    static Logger& get() {
+        return get("");
+    }
 
     void raw(const string& message) {
         m_file.open(m_filePath, ios_base::out | ios_base::app);
@@ -54,6 +48,23 @@ public:
 
 
 private:
+
+    explicit Logger(const string& loggerName) {
+        m_name = "CeroClient/" + loggerName;
+
+        string sep = path_sep;
+        string path = getHomePath();
+
+        string logsPath = path + sep + HOMEDIR_LOG_NAME;
+        Ensure(logsPath);
+
+        string currentLogsFile = logsPath + sep + "current.log";
+        EnsureD(currentLogsFile);
+        Ensure(currentLogsFile);
+
+        m_filePath = currentLogsFile;
+    };
+
     ofstream m_file;
     string m_filePath;
     string m_name;

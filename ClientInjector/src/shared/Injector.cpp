@@ -13,6 +13,5 @@ string Injector::getDLLPath() {
 #elifdef Windows
     ext = ".dll";
 #endif
-
     return currentPath + path_sep + RESOURCE_CLIENTLOADER_NAME + ext;
 }

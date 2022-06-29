@@ -8,8 +8,10 @@
 
 #ifdef MacOS
 #include <macOS/injector.h>
+MacOSInjector injectorPlatform;
 #elifdef Windows
 #include <windows/injector.h>
+WindowsInjector injectorPlatform;
 #endif
 
 
@@ -24,8 +26,12 @@
 int main(int argc, const char *argv[]) {
     argparse::ArgumentParser injector("ClientInjector");
 
-    injector.add_argument("pid")
-    .required()
+    injector.add_argument("--lunar")
+    .help("Inject into the currently launched client (1.8.9 only)")
+    .default_value(false)
+    .implicit_value(true);
+
+    injector.add_argument("--pid")
     .help("The PID of the MC instance to inject into.")
     .scan<'i', int>();
 
@@ -37,11 +43,16 @@ int main(int argc, const char *argv[]) {
         return 1;
     }
 
-#ifdef MacOS
-    MacOSInjector injectorPlatform;
-#elifdef Windows
-    WindowsInjector injectorPlatform;
-#endif
+    auto lunar = injector.get<bool>("--lunar");
 
-    return (int)injectorPlatform.inject(injector.get<int>("pid"));
+    if (!lunar && injector["pid"] == nullptr) {
+        cerr << injector << endl;
+        return 1;
+    }
+
+    int pid;
+    if (lunar) pid = injectorPlatform.getLunarPID();
+    else pid = injector.get<int>("pid");
+
+    return (int)injectorPlatform.inject(pid);
 }

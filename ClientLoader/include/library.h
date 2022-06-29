@@ -1,6 +1,0 @@
-#ifndef CLIENTLOADER_LIBRARY_H
-#define CLIENTLOADER_LIBRARY_H
-
-void hello();
-
-#endif //CLIENTLOADER_LIBRARY_H

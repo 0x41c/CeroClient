@@ -6,10 +6,13 @@
 #define CEROCLIENT_INJECTOR_H
 
 #include <commons.h>
+#include <list>
+#include <map>
 
 class Injector {
 public:
     virtual bool inject(int pid) = 0;
+    virtual int getLunarPID() = 0;
     string getDLLPath();
 };
 

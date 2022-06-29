@@ -15,11 +15,11 @@
 #include <sys/stat.h>
 #include <sys/errno.h>
 #include <assert.h>
-#include <stdio.h>  // for printf()
-#include <mach-o/fat.h> // for fat structure decoding
-#include <mach-o/arch.h> // to know which is local arch
-#include <fcntl.h> // for open
-#include <unistd.h> // for close
+#include <stdio.h>          // for printf()
+#include <mach-o/fat.h>     // for fat structure decoding
+#include <mach-o/arch.h>    // to know which is local arch
+#include <fcntl.h>          // for open
+#include <unistd.h>         // for close
 #include <sys/mman.h>
 
 #ifndef	COMPILE_TIME_ASSERT
@@ -56,7 +56,6 @@ mach_inject(
     unsigned int	jumpTableOffset;
     unsigned int	jumpTableSize;
     mach_error_t	err = machImageForPointer( threadEntry, &image, &imageSize, &jumpTableOffset, &jumpTableSize );
-    fprintf(stderr, "mach_inject: found threadEntry image at: %p with size: %lu\n", image, imageSize);
 
     //	Initialize stackSize to default if requested.
     if( stackSize == 0 )
@@ -69,9 +68,7 @@ mach_inject(
     mach_port_t	remoteTask = 0;
     if( !err ) {
         err = task_for_pid( mach_task_self(), targetProcess, &remoteTask );
-#if defined(__i386__) || defined(__x86_64__)
         if (err == 5) fprintf(stderr, "Could not access task for pid %d. You probably need to add user to procmod group\n", targetProcess);
-#endif
     }
 
     /** @todo
@@ -125,7 +122,6 @@ mach_inject(
 
 
     if( !err ) {
-
 		x86_thread_state64_t remoteThreadState;
 		bzero( &remoteThreadState, sizeof(remoteThreadState) );
 
@@ -197,13 +193,8 @@ machImageForPointer(
 
     unsigned long imageIndex, imageCount = _dyld_image_count();
     for( imageIndex = 0; imageIndex < imageCount; imageIndex++ ) {
-#if defined(__x86_64__)
         const struct mach_header_64 *header = (const struct mach_header_64 *)_dyld_get_image_header( imageIndex ); // why no function that returns mach_header_64
 		const struct section_64 *section = getsectbynamefromheader_64( header, SEG_TEXT, SECT_TEXT );
-#else
-        const struct mach_header *header = (const struct mach_header *)_dyld_get_image_header( imageIndex );
-        const struct section *section = getsectbynamefromheader( header, SEG_TEXT, SECT_TEXT );
-#endif
         if (section == 0) continue;
         long start = section->addr + _dyld_get_image_vmaddr_slide( imageIndex );
         long stop = start + section->size;
@@ -212,7 +203,7 @@ machImageForPointer(
             //	It is truely insane we have to stat() the file system in order
             //	to discover the size of an in-memory data structure.
             const char *imageName = _dyld_get_image_name( imageIndex );
-            printf("image name: %s\n", imageName);
+            //printf("image name: %s\n", imageName);
             assert( imageName );
             struct stat sb;
             if( stat( imageName, &sb ) )

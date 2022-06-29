@@ -6,11 +6,13 @@
 #define CEROCLIENT_MINJECTOR_H
 
 #include "../shared/injector.h"
+#include "mach_inject.h"
 
 class MacOSInjector: public Injector {
 public:
     MacOSInjector() = default;
     bool inject(int pid) final;
+    int getLunarPID() final;
 };
 
 #endif //CEROCLIENT_MINJECTOR_H

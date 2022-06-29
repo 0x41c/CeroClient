@@ -11,6 +11,7 @@ class WindowsInjector: public Injector {
 public:
     WindowsInjector() = default;
     bool inject(int pid) final;
+    int getLunarPID() final;
 };
 
 #endif //CEROCLIENT_WINJECTOR_H

@@ -14,7 +14,7 @@ class Injector {
 public:
     virtual bool inject(argparse::ArgumentParser parser, int pid) = 0;
     virtual int getLunarPID(argparse::ArgumentParser parser) = 0;
-    string getDLLPath();
+    string getDLLPath(argparse::ArgumentParser parser);
 };
 
 #endif //CEROCLIENT_INJECTOR_H

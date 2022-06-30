@@ -13,7 +13,7 @@ vector<string> split(string phrase, const string& delimiter);
 
 bool MacOSInjector::inject(argparse::ArgumentParser parser, int pid) {
 
-    string dllPath = getDLLPath();
+    string dllPath = getDLLPath(parser);
     mach_port_t task;
     kern_return_t ret;
     if ((ret = task_for_pid(mach_task_self_, pid, &task))) {

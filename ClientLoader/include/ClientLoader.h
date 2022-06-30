@@ -7,12 +7,16 @@
 
 #include <commons.h>
 #include <logger.h>
+#include <jni.h>
 
 class ClientLoader {
 public:
 
     ClientLoader() = default;
     void begin();
+    void attach();
+
+    JNIEnv *env;
 };
 
 

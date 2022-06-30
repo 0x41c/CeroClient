@@ -34,4 +34,10 @@
 #endif
 #endif
 
+#ifdef MacOS
+#define DYNAMIC_EXT ".dylib"
+#else
+#define DYNAMIC_EXT ".dll"
+#endif
+
 #endif //CONSTANTS_H

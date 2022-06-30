@@ -14,6 +14,7 @@ MacOSInjector injectorPlatform;
 WindowsInjector injectorPlatform;
 #endif
 
+#include <unistd.h>
 
 /**
  * The main function. Takes two different arguments on macOS and windows.
@@ -35,6 +36,12 @@ int main(int argc, const char *argv[]) {
     .help("The PID of the MC instance to inject into.")
     .scan<'i', int>();
 
+    if (getuid() != 0) {
+        cerr << "Injector needs to be run as root, re-run with sudo." << endl;
+        cerr << injector << endl;
+        return 1;
+    }
+
     try {
         injector.parse_args(argc, argv);
     } catch (const runtime_error& err) {
@@ -51,8 +58,14 @@ int main(int argc, const char *argv[]) {
     }
 
     int pid;
-    if (lunar) pid = injectorPlatform.getLunarPID();
-    else pid = injector.get<int>("pid");
+    if (lunar) {
+        pid = injectorPlatform.getLunarPID(injector);
+        if (pid < 0) {
+            cerr << "Lunar Client isn't launched." << endl;
+            cerr << injector << endl;
+            return 1;
+        }
+    } else pid = injector.get<int>("pid");
 
-    return (int)injectorPlatform.inject(pid);
+    return (int)injectorPlatform.inject(injector, pid);
 }

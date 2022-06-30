@@ -36,7 +36,7 @@ string getHomePath();
 // Common macros
 #define Ensure(dirVar) \
         if (!exists(dirVar)) create_directory(dirVar)
-#define EnsureD(dirVar) \
+#define EnsureDeleted(dirVar) \
         if (exists(dirVar)) remove(dirVar)
 #define path_sep ((string)"" + path::preferred_separator)
 

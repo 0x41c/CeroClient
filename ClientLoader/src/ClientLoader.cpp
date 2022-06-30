@@ -4,8 +4,6 @@
 
 #include <ClientLoader.h>
 
-ClientLoader::ClientLoader() {}
 void ClientLoader::begin() {
-    exit(1);
     Logger::get("ClientLoader").info("Begin called!");
 }

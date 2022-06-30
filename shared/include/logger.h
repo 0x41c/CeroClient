@@ -28,21 +28,21 @@ public:
         m_file.close();
     }
 
-    void statusMessage(const string& message) {
-        raw("[" + m_name + "/" + message);
+    void statusMessage(const string& status, const string& message) {
+        raw("[" + m_name + "/" + status + "] " + message);
     }
 
     void info(const string& message) {
-        raw("INFO] " + message);
+        statusMessage("INFO", message);
     }
 
     void warning(const string& message) {
-        raw("WARNING] " + message);
+        statusMessage("WARNING", message);
     }
 
     // TODO: Stack dumping both C++ and java.
     void error(const string& message) {
-        raw("ERROR] " + message);
+        statusMessage("ERROR", message);
         exit(1);
     }
 
@@ -59,8 +59,7 @@ private:
         Ensure(logsPath);
 
         string currentLogsFile = logsPath + sep + "current.log";
-        EnsureD(currentLogsFile);
-        Ensure(currentLogsFile);
+        EnsureDeleted(currentLogsFile);
 
         m_filePath = currentLogsFile;
     };

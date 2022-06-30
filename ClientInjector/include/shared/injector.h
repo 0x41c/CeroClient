@@ -8,11 +8,12 @@
 #include <commons.h>
 #include <list>
 #include <map>
+#include <argparse/argparse.h>
 
 class Injector {
 public:
-    virtual bool inject(int pid) = 0;
-    virtual int getLunarPID() = 0;
+    virtual bool inject(argparse::ArgumentParser parser, int pid) = 0;
+    virtual int getLunarPID(argparse::ArgumentParser parser) = 0;
     string getDLLPath();
 };
 

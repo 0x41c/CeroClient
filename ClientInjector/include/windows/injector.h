@@ -10,8 +10,8 @@
 class WindowsInjector: public Injector {
 public:
     WindowsInjector() = default;
-    bool inject(int pid) final;
-    int getLunarPID() final;
+    bool inject(argparse::ArgumentParser parser, int pid) final;
+    int getLunarPID(argparse::ArgumentParser parser) final;
 };
 
 #endif //CEROCLIENT_WINJECTOR_H

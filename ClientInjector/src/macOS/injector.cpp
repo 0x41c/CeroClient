@@ -3,52 +3,38 @@
 //
 
 #include <commons.h>
-
 #ifdef MacOS
+
 #include <macOS/injector.h>
-#include <mach/mach.h>
-#include <dlfcn.h>
-#include <array>
-#include <vector>
-
-bool MacOSInjector::inject(int pid) {
-    void *bsFunction;
-
-    string dllPath = getDLLPath();
-    auto handle = dlopen(dllPath.c_str(), RTLD_NOW | RTLD_LOCAL);
-
-    if (!handle) {
-        cerr << "Missing ClientLoader, please re-download the client" << endl;
-        return false;
-    }
-
-    cout << "DLL Handle: " + ptoh(handle) << endl;
-
-    bsFunction = dlsym(handle, "bootstrap");
-
-    if (!bsFunction) {
-        cerr << "Invalid ClientLoader, please re-download the client" << endl;
-        return false;
-    }
-
-    cout << "Bootstrap function: " + ptoh(bsFunction) << endl;
-
-    mach_error_t err = mach_inject((mach_inject_entry)bsFunction, nullptr, 0, pid, 0);
-    if (err != KERN_SUCCESS) {
-        cerr << "Error while injecting: \"" + to_string(err) + "\"" << endl;
-        return err;
-    }
-
-    cout << "Injection successful." << endl;
-
-    return true;
-}
-
+#include <macOS/remoteExec/remoteExec.h>
 
 string exec(const string& cmd);
 vector<string> split(string phrase, const string& delimiter);
 
-int MacOSInjector::getLunarPID() {
+bool MacOSInjector::inject(argparse::ArgumentParser parser, int pid) {
+
+    string dllPath = getDLLPath();
+    mach_port_t task;
+    kern_return_t ret;
+    if ((ret = task_for_pid(mach_task_self_, pid, &task))) {
+        cerr
+        << "Couldn't get task from provided PID, either the process died, or the PID was incorrect." << endl
+        << "Please double check the PID was entered correctly, or lunar wasn't killed." << endl
+        << parser << endl;
+        return false;
+    }
+
+#if false
+     if ((ret = injectToTask(task, dllPath))) return false;
+#endif
+
+    ret = RemoteExecDlopen(task, dllPath.c_str());
+
+    cout << "Injection successful." << endl;
+    return !ret;
+}
+
+int MacOSInjector::getLunarPID(argparse::ArgumentParser parser) {
     string output = exec("ps aux | grep LunarMain");
     vector<string> newList;
     double versionIDX = 0.0;
@@ -59,7 +45,9 @@ int MacOSInjector::getLunarPID() {
     for (auto thing = nl_list.begin(); thing < nl_list.end(); thing++)
         count++;
     if (count <= 3) {
-        cerr << "Lunar Client isn't launched." << endl;
+        cerr
+        << "Lunar Client isn't launched." << endl
+        << parser << endl;
         exit(1);
     }
 
@@ -79,13 +67,23 @@ int MacOSInjector::getLunarPID() {
     }
 
     if (versionIDX != 1.8) {
-        cerr << "Lunar launched on unsupported version. " + to_string(versionIDX) << endl;
+        cerr
+        << "Lunar launched on unsupported version. " + to_string(versionIDX) << endl
+        << parser << endl;
         exit(1);
     }
 
     return stoi(newList[1]);
 }
 
+//kern_return_t MacOSInjector::injectToTask(mach_port_t task, string dllpath) {
+//
+//
+//
+//    return KERN_SUCCESS;
+//}
+
+// Utility functions
 string exec(const string& cmd) {
     array<char, 128> buffer {};
     string result;

@@ -11,9 +11,8 @@
 class ClientLoader {
 public:
 
-    ClientLoader();
+    ClientLoader() = default;
     void begin();
-
 };
 
 

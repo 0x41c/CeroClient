@@ -24,7 +24,7 @@ public:
 
     void raw(const string& message) {
         m_file.open(m_filePath, ios_base::out | ios_base::app);
-        m_file << message;
+        m_file << message + "\n";
         m_file.close();
     }
 
@@ -68,5 +68,10 @@ private:
     string m_filePath;
     string m_name;
 };
+
+#ifndef CheckRet
+#define CheckRet(functionName) if (ret != JNI_OK) \
+    Logger::get().error((string)"(" + (functionName) + ") Ret failed with code: " + to_string(ret))
+#endif
 
 #endif //LOGGER_H

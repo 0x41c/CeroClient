@@ -3,5 +3,8 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/build/bin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/shared/dependancies/libzip" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/shared/dependencies/Zippy" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/shared/dependencies/libzip" vcs="Git" />
   </component>
 </project>

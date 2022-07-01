@@ -18,3 +18,21 @@ string getHomePath() {
     Ensure(path);
     return path;
 }
+
+#ifdef MacOS
+#include <dlfcn.h>
+void *getJavaSymbol(const string& name) {
+    void *handle = dlopen(nullptr, RTLD_NOW);
+    if (!handle) return nullptr;
+    void *symbol = dlsym(handle, name.c_str());
+    return symbol;
+}
+#else
+void *getJavaSymbol(string name) {
+    HMODULE jvm = GetModuleHandleA("jvm.dll");
+    if (!jvm) return nullptr;
+
+    void *symbol = GetProcAddress(jvm, name);
+    return symbol;
+}
+#endif

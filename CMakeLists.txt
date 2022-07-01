@@ -4,8 +4,12 @@ project(CeroClient VERSION 0.1 DESCRIPTION "Lunar ghost client")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/bin/resources)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/bin)
 
+# Our modules
 add_subdirectory(ClientLoader)
 add_subdirectory(ClientInjector)
+
+# Deps
+#add_subdirectory(shared/dependencies/Zippy)
 
 # Shared source files
 file(GLOB SharedSources CONFIGURE_DEPENDS
@@ -17,4 +21,5 @@ target_sources(ClientLoader PRIVATE ${SharedSources})
 target_sources(ClientInjector PRIVATE ${SharedSources})
 
 target_include_directories(ClientLoader PRIVATE shared/include)
+target_include_directories(ClientLoader PRIVATE shared/dependencies/Zippy/library)
 target_include_directories(ClientInjector PRIVATE shared/include)

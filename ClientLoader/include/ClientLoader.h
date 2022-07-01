@@ -15,7 +15,8 @@ public:
     ClientLoader() = default;
     void begin();
     void attach();
-
+    jobject getClassLoader() const;
+    JavaVM *vm;
     JNIEnv *env;
 };
 

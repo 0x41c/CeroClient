@@ -32,6 +32,7 @@ inline string ptoh(void *ptr) {
 
 // Common regular functions
 string getHomePath();
+void *getJavaSymbol(const string& name);
 
 // Common macros
 #define Ensure(dirVar) \

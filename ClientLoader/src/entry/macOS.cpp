@@ -8,17 +8,13 @@
 
 #include <entry/macos.h>
 
-void *pthread_callback(void *) {
-    ClientLoader loader;
-    loader.begin();
-    return nullptr;
-}
+void *pthread_callback(void *) { ClientLoader().begin(); return nullptr; }
 
 __attribute__((constructor))
 void entry() {
-    pthread_t thread_id;
-    pthread_create(&thread_id, nullptr, pthread_callback, nullptr);
-    pthread_detach(thread_id); pthread_kill(pthread_self(), 0);
+    pthread_t thread_id; {
+        pthread_create(&thread_id, nullptr, pthread_callback, nullptr);
+    } pthread_detach(thread_id); pthread_kill(pthread_self(), 0);
 }
 
 #endif

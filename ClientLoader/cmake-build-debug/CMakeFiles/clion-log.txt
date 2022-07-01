@@ -1,6 +1,0 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -G Ninja -S /Users/Corban/Desktop/development/cero-project/ClientLoader -B /Users/Corban/Desktop/development/cero-project/ClientLoader/cmake-build-debug
--- JNI_INCLUDE_DIRS=/Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/include;/Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/include/darwin;/Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/include
--- JNI_LIBRARIES=/Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/lib/libjawt.dylib;/Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/lib/server/libjvm.dylib
--- Configuring done
--- Generating done
--- Build files have been written to: /Users/Corban/Desktop/development/cero-project/ClientLoader/cmake-build-debug

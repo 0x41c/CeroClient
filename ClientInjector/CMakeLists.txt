@@ -8,8 +8,6 @@ file(GLOB ClientInjector_Source CONFIGURE_DEPENDS
         "src/*.cpp" "src/macOS/*.cpp" "src/windows/*.cpp" "src/shared/*.cpp"
         "src/*.c" "src/macOS/*.c" "src/windows/*.c" "src/shared/*.c")
 
-
-message(STATUS "ClientInjector Source: ${ClientInjector_Source}")
 add_executable(ClientInjector ${ClientInjector_Source})
 
 IF(APPLE)

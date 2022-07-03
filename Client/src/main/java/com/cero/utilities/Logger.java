@@ -5,15 +5,15 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static com.cero.utilities.ClientConstants.clientHomeDir;
+
 public class Logger {
 
-    static final String homeDirectory = System.getProperty("user.home") + File.separator + ".ceroclient";
-
     static void logRaw(String message) {
-        File homeDir = new File(homeDirectory);
+        File homeDir = new File(clientHomeDir);
         if (!homeDir.exists()) System.exit(1);
 
-        String logsDirectory = homeDirectory + File.separator + "logs";
+        String logsDirectory = clientHomeDir + File.separator + "logs";
         File logsDir = new File(logsDirectory);
 
         if (!logsDir.exists()) System.exit(1);

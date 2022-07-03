@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.*;
 import java.util.List;
-
+import java.util.Map;
 
 
 public class Interface implements InvocationHandler {
@@ -61,42 +61,83 @@ public class Interface implements InvocationHandler {
 
     public void loadAllFields() {
         Class<?> ourClass = this.getClass();
-        List<Field> ourFields = List.of(ourClass.getFields());
 
-        for (Field field : ourFields) {
-            RuntimeField mcField = field.getAnnotation(RuntimeField.class);
-            if (mcField == null) continue;
-            loadField(field, mcField);
-        }
-    }
+        int offsetPadding = 0;
 
-    public void loadFields(List<String> identifiers) {
-        Class<?> ourClass = this.getClass();
-        List<Field> ourFields = List.of(ourClass.getFields());
-        int foundIdentifiers = 0;
+        while (ourClass != null && ourClass != Interface.class) {
+            List<Field> ourFields = List.of(ourClass.getDeclaredFields());
+            int offset = 0;
 
-        Logger.info("Loading fields: " + identifiers);
-
-        for (Field field : ourFields) {
-            RuntimeField mcField = field.getDeclaredAnnotation(RuntimeField.class);
-
-            if (mcField != null) {
-                Logger.info("Got field annotation: (offset = " + mcField.offset() + ", identifier = " + mcField.identifier() + ")");
+            for (Field field : ourFields) {
+                loadField(field, offset + offsetPadding);
+                offset++;
             }
 
-            if (mcField == null || !identifiers.contains(mcField.identifier())) continue;
-            foundIdentifiers++;
-
-            loadField(field, mcField);
-
-            if (foundIdentifiers == identifiers.size()) break;
+            ourClass = ourClass.getSuperclass();
+            offsetPadding += ourFields.size() - 1;
         }
     }
 
-    private void loadField(@NotNull Field field, @NotNull RuntimeField fieldInfo) {
+    public void loadFields(Map<String, ?> identifiers) {
+        Class<?> ourClass = this.getClass();
+        int offsetPadding = 0;
+        int validatedIdentifiers = 0;
+
+        while (ourClass != null && ourClass != Interface.class) {
+            List<Field> ourFields = List.of(ourClass.getDeclaredFields());
+            int offset = 0;
+
+            for (Field field : ourFields) {
+                RuntimeField fieldInfo = field.getDeclaredAnnotation(RuntimeField.class);
+                String identifier = fieldInfo.identifier();
+
+                if (identifiers.containsKey(identifier)) {
+                    Object value = identifiers.get(identifier);
+
+                    if (value instanceof Map<?, ?> || value.getClass() == Boolean.class) {
+
+                        if (value.getClass() == Boolean.class) {
+                            if (!(boolean)value) continue; // Why would someone do this? idk...
+                            loadField(field, offset + offsetPadding);
+                            continue;
+                        }
+
+                        loadField(field, offset + offsetPadding);
+                        try {
+                            Object fieldValue = field.get(this);
+                            if (!(fieldValue instanceof Interface))
+                                Logger.error("Passed non-interface type as an identifier map: " + identifier);
+
+                            assert fieldValue instanceof Interface;
+
+                            ((Interface)fieldValue).loadFields((Map<String, ?>) value);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                            Logger.error("Couldn't get our own field? (" + field.getName() + ")");
+                        }
+
+                    } else {
+                        Logger.error("Illegal value passed to loadFields as an identifier value: "
+                                + value + " (" + value.getClass() + ")");
+                    }
+                    validatedIdentifiers++;
+                }
+
+
+                offset++;
+            }
+
+            if (validatedIdentifiers == identifiers.size()) break;
+
+            ourClass = ourClass.getSuperclass();
+            offsetPadding += ourFields.size() - 1;
+        }
+    }
+
+    private void loadField(@NotNull Field field, int offset) {
         field.setAccessible(true);
         try {
-            Object value = getFieldAt(fieldInfo.offset());
+            Object value = getFieldAt(offset);
 
             if (Interface.class.isAssignableFrom(field.getType()) && value != null) { // We need to instantiate this
                 Class<?>[] defaultArgs = new Class[2];

@@ -5,6 +5,7 @@ import com.cero.sdk.client.Minecraft;
 import com.cero.sdk.entity.Player;
 import com.cero.utilities.ClientConstants;
 import com.cero.utilities.Logger;
+import com.cero.utilities.runtime.Interface;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 
 public class Client {
 
@@ -103,7 +105,9 @@ public class Client {
             Object fakeInstance = mainClassLoader.loadClass(getMCName());
             Minecraft mc = new Minecraft(fakeInstance);
 
-            mc.loadFields(List.of(Minecraft.Identifiers.MINECRAFT_INSTANCE));
+            mc.loadFields(Map.ofEntries(
+                    Map.entry(Minecraft.Identifiers.MINECRAFT_INSTANCE, true)
+            ));
 
             minecraft = mc.theMinecraft;
         } catch (ClassNotFoundException e) {
@@ -124,6 +128,8 @@ public class Client {
             if (minecraft.inWorld()) {
                 if (!printedEnter) {
                     Logger.info("Entered world.");
+                    Logger.info("Minecraft field count: " + List.of(Minecraft.class.getDeclaredFields()).size());
+                    Logger.info("Interface field count" + List.of(Interface.class.getDeclaredFields()).size());
                     printedEnter = true;
                 }
 
@@ -133,13 +139,18 @@ public class Client {
                 double maxTime = player.getMaxHurtTime();
 
                 if (maxTime > 0 && hurtTime == maxTime) {
+                    //Logger.info("Setting velo");
                     double xv = player.getMotionX();
                     double zv = player.getMotionZ();
 
                     double veloReduction = 0.4;
 
+                    //Logger.info("Old xv/zv: " + xv + "/" + zv);
+
                     xv *= veloReduction;
                     zv *= veloReduction;
+
+                    //Logger.info("new xv/zv: " + xv + "/" + zv);
 
                     player.setMotionX(xv);
                     player.setMotionZ(zv);

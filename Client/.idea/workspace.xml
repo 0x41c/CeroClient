@@ -10,22 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2424593d-9af3-4530-8ec3-36dc23aaac71" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/client/Minecraft.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/entity/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/world/World.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cero/utilities/ClientConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cero/utilities/runtime/Interface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cero/utilities/runtime/RuntimeField.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/cero/Client$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/cero/utilities/ClientConstants.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/cero/utilities/runtime/Interface.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cero/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cero/utilities/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/utilities/Logger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cero/utilities/runtime/Interface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/utilities/runtime/Interface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cero/Client$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cero/Client$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cero/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cero/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cero/utilities/Logger.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cero/utilities/Logger.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cero/utilities/runtime/Interface.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cero/utilities/runtime/Interface.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +99,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1656705549291</updated>
-      <workItem from="1656705551694" duration="41922000" />
+      <workItem from="1656705551694" duration="45889000" />
     </task>
     <servers />
   </component>

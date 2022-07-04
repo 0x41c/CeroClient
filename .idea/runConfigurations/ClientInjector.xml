@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ClientInjector" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="--lunar" REDIRECT_INPUT="false" ELEVATE="true" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CeroClient" TARGET_NAME="ClientInjector" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="CeroClient" RUN_TARGET_NAME="ClientInjector">
+    <method v="2">
+      <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+    </method>
+  </configuration>
+</component>

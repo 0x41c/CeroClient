@@ -1,0 +1,21 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /Users/Corban/Desktop/development/cero-project -B /Users/Corban/Desktop/development/cero-project/cmake-build-debug
+-- The C compiler identification is AppleClang 13.1.6.13160021
+-- The CXX compiler identification is AppleClang 13.1.6.13160021
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found JNI: /Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/lib/libjawt.dylib  
+-- Found Java: /Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/bin/java (found version "16.0.2") 
+-- JNI_INCLUDE_DIRS=/Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/include;/Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/include/darwin;/Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/include
+-- JNI_LIBRARIES=/Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/lib/libjawt.dylib;/Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/lib/server/libjvm.dylib
+-- Source dir: /Users/Corban/Desktop/development/cero-project
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/Corban/Desktop/development/cero-project/cmake-build-debug

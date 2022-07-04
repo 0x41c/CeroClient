@@ -1,0 +1,3 @@
+[submodule "shared/dependencies/Zippy"]
+	path = shared/dependencies/Zippy
+	url = https://github.com/troldal/Zippy

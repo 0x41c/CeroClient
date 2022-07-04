@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="ClientLoader"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\ClientLoader\;CMake Files\ClientInjector\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/local/bin/gmake -j12 -f &quot;/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/local/bin/gmake -j12 -f &quot;/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/local/bin/gmake -j12 -f &quot;/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/local/bin/gmake -j12 -f &quot;/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ClientLoader">
+				<Option output="/Users/Corban/Desktop/development/cero-project/build/bin/resources/libClientLoader.dylib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Corban/Desktop/development/cero-project/ClientLoader/include"/>
+					<Add directory="/Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/include"/>
+					<Add directory="/Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/include/darwin"/>
+					<Add directory="/Users/Corban/Desktop/development/cero-project/shared/include"/>
+					<Add directory="/Users/Corban/Desktop/development/cero-project/shared/dependencies/Zippy/library"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.1.6/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/local/bin/gmake -j12 -f &quot;/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader/Makefile&quot;  VERBOSE=1 ClientLoader"/>
+					<CompileFile command="/usr/local/bin/gmake -j12 -f &quot;/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/local/bin/gmake -j12 -f &quot;/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/local/bin/gmake -j12 -f &quot;/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ClientLoader/fast">
+				<Option output="/Users/Corban/Desktop/development/cero-project/build/bin/resources/libClientLoader.dylib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Corban/Desktop/development/cero-project/ClientLoader/include"/>
+					<Add directory="/Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/include"/>
+					<Add directory="/Library/Java/JavaVirtualMachines/jdk-16.0.2.jdk/Contents/Home/include/darwin"/>
+					<Add directory="/Users/Corban/Desktop/development/cero-project/shared/include"/>
+					<Add directory="/Users/Corban/Desktop/development/cero-project/shared/dependencies/Zippy/library"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.1.6/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/local/bin/gmake -j12 -f &quot;/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader/Makefile&quot;  VERBOSE=1 ClientLoader/fast"/>
+					<CompileFile command="/usr/local/bin/gmake -j12 -f &quot;/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/local/bin/gmake -j12 -f &quot;/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/local/bin/gmake -j12 -f &quot;/Users/Corban/Desktop/development/cero-project/cmake-build-debug/ClientLoader/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/Corban/Desktop/development/cero-project/ClientLoader/src/ClientLoader.cpp">
+			<Option target="ClientLoader"/>
+		</Unit>
+		<Unit filename="/Users/Corban/Desktop/development/cero-project/ClientLoader/src/entry/macOS.cpp">
+			<Option target="ClientLoader"/>
+		</Unit>
+		<Unit filename="/Users/Corban/Desktop/development/cero-project/ClientLoader/src/entry/windows.cpp">
+			<Option target="ClientLoader"/>
+		</Unit>
+		<Unit filename="/Users/Corban/Desktop/development/cero-project/shared/src/commons.cpp">
+			<Option target="ClientLoader"/>
+		</Unit>
+		<Unit filename="/Users/Corban/Desktop/development/cero-project/shared/src/zip.cpp">
+			<Option target="ClientLoader"/>
+		</Unit>
+		<Unit filename="/Users/Corban/Desktop/development/cero-project/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/Corban/Desktop/development/cero-project/ClientLoader/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ClientLoader\"/>
+		</Unit>
+		<Unit filename="/Users/Corban/Desktop/development/cero-project/ClientInjector/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ClientInjector\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

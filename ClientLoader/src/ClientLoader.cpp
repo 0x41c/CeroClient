@@ -42,7 +42,6 @@ void ClientLoader::begin() {
         if (entry == "com/cero/Client") {
             clientMainClass = ourClass;
         }
-        Logger::get().info("Class \"" + entry + "\": " + ptoh(ourClass));
     }
     Logger::get().info("Got our class!: " + ptoh(clientMainClass));
 

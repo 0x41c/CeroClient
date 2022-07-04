@@ -1,12 +1,12 @@
 package com.cero.utilities.runtime;
 
 
+import com.cero.sdk.client.Minecraft;
 import com.cero.utilities.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.*;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class Interface implements InvocationHandler {
@@ -14,20 +14,65 @@ public class Interface implements InvocationHandler {
     public Interface(@NotNull Class<?> type, Object instance) {
         this.instance = instance;
         this.classData = type;
-        this.fields = List.of(type.getFields());
-        this.methods = List.of(type.getMethods()) ;
+        this.remoteFields = List.of(type.getFields());
+        this.remoteMethods = List.of(type.getMethods());
+
+        Class<?> interfaceType = this.getClass().getClasses()[0];
+        assert interfaceType != null;
+
+        this.interfaceType = interfaceType;
+
+        List<Field> interfaceFields = List.of(this.interfaceType.getDeclaredFields());
+
+        assert interfaceFields.size() == this.remoteFields.size();
+
+        for (Field field : interfaceFields) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(null);
+                assert value instanceof String;
+                fieldIdentifiers.add((String)value);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+                Logger.info("Couldn't access interface field: " + field.getName() + " (" + e.getMessage() + ")");
+            }
+        }
+
+        this.ourClass = this.getClass();
+        this.ourFields = List.of(ourClass.getDeclaredFields());
+        this.ourMethods = List.of(ourClass.getDeclaredMethods());
     }
 
     public Object instance;
     public Class<?> classData;
-    public List<Field> fields;
-    public List<Method> methods;
+    public List<Field> remoteFields;
+    public List<Method> remoteMethods;
+
+    public Class<?> ourClass;
+    public List<Field> ourFields;
+    public List<Method> ourMethods;
+    public Class<?> interfaceType;
+
+    public ArrayList<String> fieldIdentifiers = new ArrayList<>();
+    public HashMap<String, Object> fieldCache = new HashMap<>();
+
+    private List<Class<?>> wrapperTypes = List.of(
+            Boolean.class,
+            Character.class,
+            Byte.class,
+            Short.class,
+            Integer.class,
+            Long.class,
+            Float.class,
+            Double.class,
+            Void.class
+    );
 
     // TODO: Deprecate public use of getFieldAt and setFieldAt.
 
     public <T> T getFieldAt(int offset) {
         T ret = null;
-        Field field = fields.get(offset);
+        Field field = remoteFields.get(offset);
         field.setAccessible(true);
         try {
             ret = (T) field.get(instance);
@@ -39,7 +84,13 @@ public class Interface implements InvocationHandler {
     }
 
     public <T> void setFieldAt(int offset, T value) {
-        Field field = fields.get(offset);
+        Field field = remoteFields.get(offset);
+        int fieldModifiers = field.getModifiers();
+
+        if ((fieldModifiers & Modifier.FINAL) == Modifier.FINAL) {
+            Logger.warning("Attempted to mutate final field " + ourFields.get(offset).getName() + " (" + offset + ")");
+        }
+
         field.setAccessible(true);
         try {
             field.set(instance, value);
@@ -53,7 +104,7 @@ public class Interface implements InvocationHandler {
         int i = 0;
         Logger.info("Dumping class " + classData.getName());
         Logger.info("------------");
-        for (Field field : fields) {
+        for (Field field : remoteFields) {
             Logger.info("[" + i + "] Field \"" + field.getName() + "\": " + field.getType()); i++;
         }
         Logger.info("------------");
@@ -69,7 +120,7 @@ public class Interface implements InvocationHandler {
             int offset = 0;
 
             for (Field field : ourFields) {
-                loadField(field, offset + offsetPadding);
+                loadField(field, offset + offsetPadding, fieldIdentifiers.get(offset));
                 offset++;
             }
 
@@ -84,46 +135,36 @@ public class Interface implements InvocationHandler {
         int validatedIdentifiers = 0;
 
         while (ourClass != null && ourClass != Interface.class) {
-            List<Field> ourFields = List.of(ourClass.getDeclaredFields());
             int offset = 0;
 
             for (Field field : ourFields) {
-                RuntimeField fieldInfo = field.getDeclaredAnnotation(RuntimeField.class);
-                String identifier = fieldInfo.identifier();
+                String identifier = fieldIdentifiers.get(offset);
 
                 if (identifiers.containsKey(identifier)) {
                     Object value = identifiers.get(identifier);
 
-                    if (value instanceof Map<?, ?> || value.getClass() == Boolean.class) {
-
-                        if (value.getClass() == Boolean.class) {
-                            if (!(boolean)value) continue; // Why would someone do this? idk...
-                            loadField(field, offset + offsetPadding);
-                            continue;
-                        }
-
-                        loadField(field, offset + offsetPadding);
+                    if (value instanceof Map<?, ?>) {
+                        loadField(field, offset + offsetPadding, identifier);
                         try {
                             Object fieldValue = field.get(this);
                             if (!(fieldValue instanceof Interface))
                                 Logger.error("Passed non-interface type as an identifier map: " + identifier);
-
                             assert fieldValue instanceof Interface;
-
-                            ((Interface)fieldValue).loadFields((Map<String, ?>) value);
+                            ((Interface)fieldValue).loadFields((Map<String, ?>)value);
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
                             Logger.error("Couldn't get our own field? (" + field.getName() + ")");
                         }
-
+                    } else if (value.getClass() == Boolean.class) {
+                        if (!(boolean)value) continue;
+                        loadField(field, offset + offsetPadding, identifier);
                     } else {
                         Logger.error("Illegal value passed to loadFields as an identifier value: "
                                 + value + " (" + value.getClass() + ")");
                     }
                     validatedIdentifiers++;
+                    if (validatedIdentifiers == identifiers.size()) continue;
                 }
-
-
                 offset++;
             }
 
@@ -134,20 +175,33 @@ public class Interface implements InvocationHandler {
         }
     }
 
-    private void loadField(@NotNull Field field, int offset) {
+    private void loadField(@NotNull Field field, int offset, @NotNull String identifier) {
         field.setAccessible(true);
+
         try {
             Object value = getFieldAt(offset);
+            Object ourValue = field.get(this);
 
-            if (Interface.class.isAssignableFrom(field.getType()) && value != null) { // We need to instantiate this
+            // Instantiation
+            if (Interface.class.isAssignableFrom(field.getType()) && value != null) {
+
+                if (ourValue != null) {
+                    assert ourValue instanceof Interface;
+                    ((Interface) ourValue).instance = value;
+                    fieldCache.put(identifier, ourValue);
+                    return;
+                }
+
+                Logger.info("Instantiating field " + field.getName());
                 Class<?>[] defaultArgs = new Class[2];
                 defaultArgs[0] = Class.class;
                 defaultArgs[1] = Object.class;
-                Constructor<?> defaultConstructor = ((Class<Interface>)field.getType()).getDeclaredConstructor(defaultArgs);
+                Constructor<?> defaultConstructor = field.getType().getDeclaredConstructor(defaultArgs);
                 value = defaultConstructor.newInstance(value.getClass(), value);
             }
 
             field.set(this, value);
+            fieldCache.put(identifier, value);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
             Logger.error("Couldn't set our own field? (" + field.getName() + ")");
@@ -160,34 +214,41 @@ public class Interface implements InvocationHandler {
         }
     }
 
-    public void setFields(List<String> identifiers) {
-        Class<?> ourClass = this.getClass();
-        List<Field> ourFields = List.of(ourClass.getFields());
 
-        for (Field field: ourFields) {
-            RuntimeField mcField = ourClass.getAnnotation(RuntimeField.class);
-            if (mcField == null) continue;
-            if (identifiers.contains(mcField.identifier())) {
-                Field remoteField = fields.get(mcField.offset());
+    public void applyChanges() {
+        int index = 0;
 
-                // For the memes
-                field.setAccessible(true);
-                remoteField.setAccessible(true);
+        for (Field field : ourFields) {
 
-                try {
-                    Object value = field.get(this);
+            String identifier = fieldIdentifiers.get(index);
+            Object fieldCacheVal = fieldCache.get(identifier);
 
-                    // This means we're proxying
-                    // TODO: Recursive identifier list
-                    if (value instanceof Interface) {}
+            field.setAccessible(true);
 
-                    remoteField.set(instance, value);
-                } catch (IllegalAccessException exception) {
-                    exception.printStackTrace();
-                    Logger.error("Error setting field with identifier: \""
-                            + mcField.identifier() + "\" (" + exception.getMessage() + ")");
+            try {
+                Object value = field.get(this);
+
+                if (value instanceof Interface && !(value instanceof Minecraft))
+                    ((Interface)value).applyChanges();
+                else if (fieldCacheVal != value) {
+                    if (fieldCacheVal != null && value != null)
+                        if (value.equals(fieldCacheVal)) {
+                            index++;
+                            continue;
+                        }
+
+                    Logger.info("Setting field: " + field.getName());
+                    Logger.info("Object value: " + value);
+                    Logger.info(" Cache value: " + fieldCacheVal);
+                    setFieldAt(index, value);
                 }
+
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+                Logger.error("Couldn't get our own field? (" + field.getName() + ")");
             }
+
+            index++;
         }
     }
 

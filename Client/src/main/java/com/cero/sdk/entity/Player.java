@@ -5,7 +5,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class Player extends Interface {
 
-    public Player(@NotNull Class<?> type, @NotNull Object instance) { super(type, instance); }
+    public Player(@NotNull Class<?> type, @NotNull Object player) { super(type, player); }
+
+    public static class Identifiers {}
 
     // EntityLivingBase 67
 

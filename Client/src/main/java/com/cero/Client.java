@@ -139,18 +139,18 @@ public class Client {
                 double maxTime = player.getMaxHurtTime();
 
                 if (maxTime > 0 && hurtTime == maxTime) {
-                    //Logger.info("Setting velo");
+                    Logger.info("Setting velo");
                     double xv = player.getMotionX();
                     double zv = player.getMotionZ();
 
                     double veloReduction = 0.4;
 
-                    //Logger.info("Old xv/zv: " + xv + "/" + zv);
+                    Logger.info("Old xv/zv: " + xv + "/" + zv);
 
                     xv *= veloReduction;
                     zv *= veloReduction;
 
-                    //Logger.info("new xv/zv: " + xv + "/" + zv);
+                    Logger.info("new xv/zv: " + xv + "/" + zv);
 
                     player.setMotionX(xv);
                     player.setMotionZ(zv);
@@ -161,6 +161,8 @@ public class Client {
                     printedEnter = false;
                 }
             }
+
+            minecraft.applyChanges();
 
             try {
                 Thread.sleep(25);

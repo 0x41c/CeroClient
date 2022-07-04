@@ -7,4 +7,6 @@ public class World extends Interface {
 
     public World(@NotNull Class<?> type, @NotNull Object world) { super(type, world); }
 
+    public static class Identifiers {}
+
 }

@@ -196,7 +196,6 @@ public class Interface implements InvocationHandler {
                             continue;
                         }
                     }
-                    Logger.info("Setting field:" + field.getName());
                     setFieldAt(index, value);
                 }
 

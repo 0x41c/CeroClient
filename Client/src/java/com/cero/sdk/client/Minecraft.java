@@ -1,7 +1,7 @@
 package com.cero.sdk.client;
 
 import com.cero.Client;
-import com.cero.sdk.entity.Player;
+import com.cero.sdk.client.entity.EntityPlayerSP;
 import com.cero.sdk.world.World;
 import com.cero.utilities.runtime.Interface;
 import org.jetbrains.annotations.NotNull;
@@ -146,7 +146,7 @@ public class Minecraft extends Interface {
     public Object renderManager;
     public Object renderItem;
     public Object itemRenderer;
-    public Player thePlayer;
+    public EntityPlayerSP thePlayer;
     public Object renderViewEntity;
     public Object pointedEntity;
     public Object effectRenderer;

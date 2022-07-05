@@ -2,7 +2,7 @@ package com.cero;
 
 
 import com.cero.sdk.client.Minecraft;
-import com.cero.sdk.entity.Player;
+import com.cero.sdk.client.entity.EntityPlayerSP;
 import com.cero.utilities.ClientConstants;
 import com.cero.utilities.Logger;
 import com.cero.utilities.runtime.Interface;
@@ -133,20 +133,13 @@ public class Client {
                     printedEnter = true;
                 }
 
-                Player player = minecraft.thePlayer;
+                EntityPlayerSP player = minecraft.thePlayer;
 
-                double hurtTime = player.getPlayerHurtTime();
-                double maxTime = player.getMaxHurtTime();
-
-                if (maxTime > 0 && hurtTime == maxTime) {
-                    double xv = player.getMotionX();
-                    double zv = player.getMotionZ();
-                    double veloReduction = 0.4;
-                    xv *= veloReduction;
-                    zv *= veloReduction;
-                    player.setMotionX(xv);
-                    player.setMotionZ(zv);
+                if (player.maxHurtTime > 0 && player.hurtTime == player.maxHurtTime) {
+                    player.motionX *= 0.4;
+                    player.motionZ *= 0.4;
                 }
+
             } else {
                 if (printedEnter) {
                     Logger.info("Exited world.");

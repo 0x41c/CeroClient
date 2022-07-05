@@ -132,8 +132,6 @@ public class Client {
                     printedEnter = true;
                 }
                 EntityPlayerSP player = minecraft.thePlayer;
-                player.loadAllFields();
-
                 if (player.maxHurtTime > 0 && player.hurtTime == player.maxHurtTime) {
                     Logger.info("was hit");
                     player.motionX *= 0.4;

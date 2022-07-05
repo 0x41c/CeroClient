@@ -6,7 +6,7 @@ public class BlockPos extends Vec3i {
 
     public BlockPos(@NotNull Class<?> type, @NotNull Object blockPos) { super(type, blockPos); }
 
-    public BlockPos ORIGIN;
+    public Object ORIGIN; // Don't set this to Interface
 
     public int NUM_X_BITS;
     public int NUM_Z_BITS;

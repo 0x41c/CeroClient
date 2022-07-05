@@ -31,7 +31,7 @@ public class Minecraft extends Interface {
     public Object profileProperties;
     public Object currentServerData;
     public Object renderEngine;
-    public Minecraft theMinecraft;
+    public Object theMinecraft; // Don't set this to Interface
     public Object playerController;
     public boolean isFullscreen;
     public boolean enableGLErrorTracking;

@@ -20,8 +20,14 @@ public class Interface implements InvocationHandler {
         this.remoteMethods = List.of(type.getMethods());
 
         this.ourClass = this.getClass();
-        this.ourFields = List.of(ourClass.getDeclaredFields());
-        this.ourMethods = List.of(ourClass.getDeclaredMethods());
+
+        Class<?> currentClass = ourClass;
+        while (currentClass != null && currentClass != Interface.class) {
+            ourFields.addAll(List.of(currentClass.getDeclaredFields()));
+            currentClass = currentClass.getSuperclass();
+        }
+
+        this.ourMethods = List.of(ourClass.getDeclaredMethods()); // TODO: Implement methods
     }
 
     public Object instance;
@@ -30,7 +36,7 @@ public class Interface implements InvocationHandler {
     public List<Method> remoteMethods;
 
     public Class<?> ourClass;
-    public List<Field> ourFields;
+    public ArrayList<Field> ourFields = new ArrayList<>();
     public List<Method> ourMethods;
     public HashMap<Integer, Object> fieldCache = new HashMap<>();
 
@@ -81,23 +87,15 @@ public class Interface implements InvocationHandler {
     public void verifiyFieldTypes() {
         Logger.info("Verifying types.");
         Logger.info("------------");
-        ArrayList<Field> allFields = new ArrayList<>();
-        Class<?> Class = this.ourClass;
-
-        while (Class != null && Class != Interface.class) {
-            allFields.addAll(List.of(Class.getDeclaredFields()));
-            Class = Class.getSuperclass();
-        }
-
-        if (remoteFields.size() != allFields.size())
-            Logger.warning("Mismatch in field sizes. (us: " + allFields.size() + ", them: " + remoteFields.size() + ")");
+        if (remoteFields.size() != ourFields.size())
+            Logger.warning("Mismatch in field sizes. (us: " + ourFields.size() + ", them: " + remoteFields.size() + ")");
         for (int i = 0; i < remoteFields.size(); i++) {
             Field mcField = remoteFields.get(i);
-            if (i > allFields.size() - 1) {
+            if (i > ourFields.size() - 1) {
                 Logger.info("[" + i + "] OOB field \"" + mcField.getName() + "\":\"" + mcField.getType() + "\"");
                 continue;
             }
-            Field ourField = allFields.get(i);
+            Field ourField = ourFields.get(i);
             String ourFieldStringType = ourField.getType().getName();
             String mcFieldStringType = mcField.getType().getName();
 
@@ -115,45 +113,32 @@ public class Interface implements InvocationHandler {
     }
 
     public void loadAllFields() {
-        Class<?> ourClass = this.getClass();
-
-        int offsetPadding = 0;
-
-        while (ourClass != null && ourClass != Interface.class) {
-            List<Field> ourFields = List.of(ourClass.getDeclaredFields());
-            int offset = offsetPadding;
-
-            for (Field field : ourFields) {
-                loadField(field, offset);
-                offset++;
-            }
-
-            ourClass = ourClass.getSuperclass();
-            offsetPadding += ourFields.size();
+        for (int offset = 0; offset < ourFields.size(); offset++) {
+            Field field = ourFields.get(offset);
+            loadField(field, offset);
+            initializeFieldIfNecessary(field);
         }
     }
 
     public void loadFields(List<Integer> offsets) {
-        Class<?> ourClass = this.getClass();
-        int offsetPadding = 0;
-        int validatedIdentifiers = 0;
-
-        while (ourClass != null && ourClass != Interface.class) {
-            int offset = 0;
-            for (Field field : ourFields) {
-                int joined = offset + offsetPadding;
-                if (offsets.contains(joined)) {
-                    loadField(field, joined);
-                    validatedIdentifiers++;
-                    if (validatedIdentifiers == offsets.size()) continue;
-                }
-                offset++;
+        for (int offset : offsets) {
+            Field field = ourFields.get(offset);
+            if (field != null) {
+                loadField(field, offset);
+                initializeFieldIfNecessary(field);
             }
+        }
+    }
 
-            if (validatedIdentifiers == offsets.size()) break;
-
-            ourClass = ourClass.getSuperclass();
-            offsetPadding += ourFields.size() - 1;
+    private void initializeFieldIfNecessary(Field field) {
+        Object value = null;
+        try {
+            value = field.get(this);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        if (value instanceof Interface && !(value instanceof Minecraft)) {
+            ((Interface) value).loadAllFields();
         }
     }
 
@@ -195,7 +180,6 @@ public class Interface implements InvocationHandler {
         int index = 0;
 
         for (Field field : ourFields) {
-
             Object fieldCacheVal = fieldCache.get(index);
 
             field.setAccessible(true);
@@ -206,15 +190,13 @@ public class Interface implements InvocationHandler {
                 if (value instanceof Interface && !(value instanceof Minecraft))
                     ((Interface)value).applyChanges();
                 else if (fieldCacheVal != value) {
-                    if (fieldCacheVal != null && value != null)
+                    if (fieldCacheVal != null && value != null) {
                         if (value.equals(fieldCacheVal)) {
                             index++;
                             continue;
                         }
-
-                    Logger.info("Setting field: " + field.getName());
-                    Logger.info("Object value: " + value);
-                    Logger.info(" Cache value: " + fieldCacheVal);
+                    }
+                    Logger.info("Setting field:" + field.getName());
                     setFieldAt(index, value);
                 }
 

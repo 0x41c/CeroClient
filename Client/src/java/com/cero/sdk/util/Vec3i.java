@@ -7,6 +7,7 @@ public class Vec3i extends Interface {
 
     public Vec3i(@NotNull Class<?> type, @NotNull Object vec3i) { super(type, vec3i); }
 
+    public Object NULL_VECTOR;
     public int x;
     public int y;
     public int z;

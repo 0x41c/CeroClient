@@ -11,22 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="2424593d-9af3-4530-8ec3-36dc23aaac71" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/client/Minecraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/client/Minecraft.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/client/entity/AbstractClientPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/client/entity/AbstractClientPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/client/entity/EntityPlayerSP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/client/entity/EntityPlayerSP.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/entity/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/entity/EntityLivingBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/entity/EntityLivingBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/entity/player/EntityPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/entity/player/EntityPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/util/AxisAlignedBB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/util/AxisAlignedBB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/util/BlockPos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/util/BlockPos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/util/Vec3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/util/Vec3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/util/Vec3i.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/util/Vec3i.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/util/Vec4b.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/util/Vec4b.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/world/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/sdk/world/World.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/utilities/ClientConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/utilities/ClientConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/utilities/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/utilities/Logger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/utilities/runtime/Interface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cero/utilities/runtime/Interface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/client/Minecraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/client/Minecraft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/util/BlockPos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/util/BlockPos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/util/Vec3i.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/util/Vec3i.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/utilities/runtime/Interface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/utilities/runtime/Interface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,16 +130,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/cero/utilities/runtime/Interface.java</url>
-          <line>182</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

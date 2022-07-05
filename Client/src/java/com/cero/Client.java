@@ -5,15 +5,13 @@ import com.cero.sdk.client.Minecraft;
 import com.cero.sdk.client.entity.EntityPlayerSP;
 import com.cero.utilities.ClientConstants;
 import com.cero.utilities.Logger;
-import com.cero.utilities.runtime.Interface;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Map;
 
 public class Client {
 
@@ -54,7 +52,7 @@ public class Client {
             Logger.info("Using lunar client.");
             String sep = File.separator;
             String jarPath = ClientConstants.lunarHomeDir
-                    + sep + "offline" + sep + "1.8" + sep + "lunar-prod-optifine.jar";
+                    + sep + "offline" + sep + "1.8.9" + sep + "lunar-prod-optifine.jar";
             String mappingFilePath = sep + "patch" + sep + "v1_8" + sep + "mappings.txt";
 
             URL jarMappingsURL = null;
@@ -102,14 +100,17 @@ public class Client {
     void getMinecraft() {
         Logger.info("Getting minecraft");
         try {
-            Object fakeInstance = mainClassLoader.loadClass(getMCName());
-            Minecraft mc = new Minecraft(fakeInstance);
-
-            mc.loadFields(Map.ofEntries(
-                    Map.entry(Minecraft.Identifiers.MINECRAFT_INSTANCE, true)
-            ));
-
-            minecraft = mc.theMinecraft;
+            Class<?> mcClazz = mainClassLoader.loadClass(getMCName());
+            Field mcField = mcClazz.getDeclaredFields()[10];
+            mcField.setAccessible(true);
+            try {
+                minecraft = new Minecraft(mcClazz, mcField.get(mcClazz));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+                Logger.error("Couldn't get mc field: " + e.getMessage());
+            }
+            assert minecraft != null;
+            minecraft.loadAllFields();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             Logger.error("Couldn't get class: " + e.getMessage());
@@ -128,14 +129,13 @@ public class Client {
             if (minecraft.inWorld()) {
                 if (!printedEnter) {
                     Logger.info("Entered world.");
-                    Logger.info("Minecraft field count: " + List.of(Minecraft.class.getDeclaredFields()).size());
-                    Logger.info("Interface field count" + List.of(Interface.class.getDeclaredFields()).size());
                     printedEnter = true;
                 }
-
                 EntityPlayerSP player = minecraft.thePlayer;
+                player.loadAllFields();
 
                 if (player.maxHurtTime > 0 && player.hurtTime == player.maxHurtTime) {
+                    Logger.info("was hit");
                     player.motionX *= 0.4;
                     player.motionZ *= 0.4;
                 }

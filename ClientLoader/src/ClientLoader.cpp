@@ -4,6 +4,9 @@
 
 #include <ClientLoader.h>
 #include <Zippy.hpp>
+#include <jnif.hpp>
+#include <map>
+
 
 #ifdef MacOS
 typedef jint (*getcreatedvms_t)(JavaVM **, jsize, jsize *);
@@ -31,31 +34,57 @@ void ClientLoader::begin() {
     jobject classLoader = getClassLoader();
 
     Zippy::ZipArchive clientArchive(jarPath);
-    jclass clientMainClass;
-    for (auto entry : clientArchive.GetEntryNames(false)) {
+    map<string, vector<unsigned char>> classDataMap;
+    map<string, string> superClassMap;
+
+    // Pre-process the classes into a map we can use
+    for (auto const &entry : clientArchive.GetEntryNames(false)) {
         auto zipEntryData = clientArchive.GetEntry(entry).GetData();
-        entry = entry.substr(0, entry.length() - 6);
-        Logger::get().info("Defining class: " + entry);
-        auto rawData = (signed char *)zipEntryData.data();
-        jclass ourClass = env->DefineClass(entry.c_str(), classLoader, rawData, zipEntryData.size());
+        auto parser = jnif::parser::ClassFileParser(zipEntryData.data(), zipEntryData.size());
+        string name = entry.substr(0, entry.length() - 6);
+        string superClassName = parser.getSuperClassName();
 
-        if (entry == "com/cero/Client") {
-            clientMainClass = ourClass;
-        }
+        Logger::get().info("Mapping " + name + "with superclass: " + superClassName);
+
+        classDataMap.insert({ name, zipEntryData });
+        superClassMap.insert({ name, superClassName });
     }
-    Logger::get().info("Got our class!: " + ptoh(clientMainClass));
 
-    jmethodID entry = env->GetStaticMethodID(clientMainClass, "entry", "()V");
+    set<string> loadedClasses = {
+            "java/lang/Object" // Default
+    };
+
+    while (!classDataMap.empty()) {
+        for (auto const &classData : classDataMap) {
+            string name = classData.first;
+            string superclass_name = superClassMap.at(name);
+            if (loadedClasses.find(superclass_name) != loadedClasses.end()) {
+                defineClass(classLoader, name, classData.second);
+                loadedClasses.insert(name);
+            }
+        }
+
+        for (auto const &loaded: loadedClasses)
+            if (classDataMap.contains(loaded))
+                classDataMap.erase(loaded);
+
+    }
+
+    Logger::get().info("Got our class!: " + ptoh(entryPoint));
+
+    jmethodID entry = env->GetStaticMethodID(entryPoint, "entry", "()V");
 
     if (entry) Logger::get().info("Retrieved entryPoint: " + ptoh(entry));
     else Logger::get().error("Couldn't get entryPoint");
 
     Logger::get().info("Calling java method!");
-    env->CallStaticVoidMethod(clientMainClass, entry);
+    env->CallStaticVoidMethod(entryPoint, entry);
     Logger::get().info("Called entryPoint. Exiting");
 
-    env->DeleteLocalRef(clientMainClass);
+    env->DeleteLocalRef(entryPoint);
 }
+
+
 
 void ClientLoader::attach() {
     Logger::get().info("Attaching...");
@@ -112,4 +141,13 @@ jobject ClientLoader::getClassLoader() const {
     Logger::get().info("Retrieved class loader: " + ptoh(classLoader));
 
     return classLoader;
+}
+
+void ClientLoader::defineClass(jobject classLoader, string name, vector<unsigned char> data) {
+    jclass defClass = env->DefineClass(name.c_str(), classLoader, reinterpret_cast<const jbyte *>(data.data()), data.size());
+    if (defClass == nullptr)
+        Logger::get().error("Couldn't define class " + name);
+
+    if (name == "com/cero/Client")
+        entryPoint = defClass;
 }

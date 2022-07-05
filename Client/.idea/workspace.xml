@@ -9,7 +9,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2424593d-9af3-4530-8ec3-36dc23aaac71" name="Changes" comment="" />
+    <list default="true" id="2424593d-9af3-4530-8ec3-36dc23aaac71" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/client/entity/AbstractClientPlayer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/client/entity/EntityPlayerSP.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/entity/Entity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/entity/EntityLivingBase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/entity/player/EntityPlayer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/util/AxisAlignedBB.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/util/BlockPos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/util/Vec3.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/util/Vec3i.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/util/Vec4b.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shared/dependencies/jnif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitmodules" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cero/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cero/sdk/client/Minecraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/client/Minecraft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cero/sdk/entity/Player.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cero/sdk/world/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/world/World.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cero/utilities/ClientConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/utilities/ClientConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cero/utilities/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/utilities/Logger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cero/utilities/runtime/Interface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/utilities/runtime/Interface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientLoader/include/ClientLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientLoader/include/ClientLoader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientLoader/src/ClientLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientLoader/src/ClientLoader.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,8 +46,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="AnnotationType" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -59,11 +84,16 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.13351136" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="project.structure.side.proportion" value="0.3436402" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="ReaderModeSettings">
     <option name="showLigatures" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
   </component>
   <component name="RunManager" selected="Shell Script.Build/Deploy Client">
     <configuration name="Build/Deploy Client" type="ShConfigurationType">
@@ -99,7 +129,8 @@
       <option name="presentableId" value="Default" />
       <updated>1656705549291</updated>
       <workItem from="1656705551694" duration="62288000" />
-      <workItem from="1656952545638" duration="1098000" />
+      <workItem from="1656952545638" duration="3288000" />
+      <workItem from="1656957592461" duration="25103000" />
     </task>
     <servers />
   </component>

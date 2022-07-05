@@ -13,6 +13,7 @@ public class EntityPlayerSP extends AbstractClientPlayer {
     public double lastReportedPosX;
     public double lastReportedPosY;
     public double lastReportedPosZ;
+    public float lastReportedYaw;
     public float lastReportedPitch;
     public boolean serverSneakState;
     public boolean serverSprintState;

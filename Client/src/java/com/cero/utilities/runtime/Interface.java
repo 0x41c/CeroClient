@@ -6,7 +6,9 @@ import com.cero.utilities.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class Interface implements InvocationHandler {
@@ -16,27 +18,6 @@ public class Interface implements InvocationHandler {
         this.classData = type;
         this.remoteFields = List.of(type.getFields());
         this.remoteMethods = List.of(type.getMethods());
-
-        Class<?> interfaceType = this.getClass().getClasses()[0];
-        assert interfaceType != null;
-
-        this.interfaceType = interfaceType;
-
-        List<Field> interfaceFields = List.of(this.interfaceType.getDeclaredFields());
-
-        assert interfaceFields.size() == this.remoteFields.size();
-
-        for (Field field : interfaceFields) {
-            field.setAccessible(true);
-            try {
-                Object value = field.get(null);
-                assert value instanceof String;
-                fieldIdentifiers.add((String)value);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-                Logger.info("Couldn't access interface field: " + field.getName() + " (" + e.getMessage() + ")");
-            }
-        }
 
         this.ourClass = this.getClass();
         this.ourFields = List.of(ourClass.getDeclaredFields());
@@ -51,22 +32,9 @@ public class Interface implements InvocationHandler {
     public Class<?> ourClass;
     public List<Field> ourFields;
     public List<Method> ourMethods;
-    public Class<?> interfaceType;
+    public HashMap<Integer, Object> fieldCache = new HashMap<>();
 
-    public ArrayList<String> fieldIdentifiers = new ArrayList<>();
-    public HashMap<String, Object> fieldCache = new HashMap<>();
 
-    private List<Class<?>> wrapperTypes = List.of(
-            Boolean.class,
-            Character.class,
-            Byte.class,
-            Short.class,
-            Integer.class,
-            Long.class,
-            Float.class,
-            Double.class,
-            Void.class
-    );
 
     // TODO: Deprecate public use of getFieldAt and setFieldAt.
 
@@ -110,6 +78,42 @@ public class Interface implements InvocationHandler {
         Logger.info("------------");
     }
 
+    public void verifiyFieldTypes() {
+        Logger.info("Verifying types.");
+        Logger.info("------------");
+        ArrayList<Field> allFields = new ArrayList<>();
+        Class<?> Class = this.ourClass;
+
+        while (Class != null && Class != Interface.class) {
+            allFields.addAll(List.of(Class.getDeclaredFields()));
+            Class = Class.getSuperclass();
+        }
+
+        if (remoteFields.size() != allFields.size())
+            Logger.warning("Mismatch in field sizes. (us: " + allFields.size() + ", them: " + remoteFields.size() + ")");
+        for (int i = 0; i < remoteFields.size(); i++) {
+            Field mcField = remoteFields.get(i);
+            if (i > allFields.size() - 1) {
+                Logger.info("[" + i + "] OOB field \"" + mcField.getName() + "\":\"" + mcField.getType() + "\"");
+                continue;
+            }
+            Field ourField = allFields.get(i);
+            String ourFieldStringType = ourField.getType().getName();
+            String mcFieldStringType = mcField.getType().getName();
+
+            boolean mismatch = !mcFieldStringType.contains("minecraft") && !mcFieldStringType.contains("mojang")
+                    ? !ourFieldStringType.equals(mcFieldStringType)
+                    : mcField.getType().isAssignableFrom(ourField.getType());
+
+            if (mismatch)
+                Logger.warning("[" + i + "] \"" + mcField.getName() + "\":\"" + ourField.getName() + "\" "
+                                + "\"" + mcField.getType().getName() + "\":\"" + ourField.getType().getName() + "\"");
+            else Logger.info("[" + i + "] \"" + mcField.getName() + "\":\"" + ourField.getName() + "\" "
+                    + "\"" + mcField.getType().getName() + "\":\"" + ourField.getType().getName() + "\"");
+
+        }
+    }
+
     public void loadAllFields() {
         Class<?> ourClass = this.getClass();
 
@@ -117,65 +121,43 @@ public class Interface implements InvocationHandler {
 
         while (ourClass != null && ourClass != Interface.class) {
             List<Field> ourFields = List.of(ourClass.getDeclaredFields());
-            int offset = 0;
+            int offset = offsetPadding;
 
             for (Field field : ourFields) {
-                loadField(field, offset + offsetPadding, fieldIdentifiers.get(offset));
+                loadField(field, offset);
                 offset++;
             }
 
             ourClass = ourClass.getSuperclass();
-            offsetPadding += ourFields.size() - 1;
+            offsetPadding += ourFields.size();
         }
     }
 
-    public void loadFields(Map<String, ?> identifiers) {
+    public void loadFields(List<Integer> offsets) {
         Class<?> ourClass = this.getClass();
         int offsetPadding = 0;
         int validatedIdentifiers = 0;
 
         while (ourClass != null && ourClass != Interface.class) {
             int offset = 0;
-
             for (Field field : ourFields) {
-                String identifier = fieldIdentifiers.get(offset);
-
-                if (identifiers.containsKey(identifier)) {
-                    Object value = identifiers.get(identifier);
-
-                    if (value instanceof Map<?, ?>) {
-                        loadField(field, offset + offsetPadding, identifier);
-                        try {
-                            Object fieldValue = field.get(this);
-                            if (!(fieldValue instanceof Interface))
-                                Logger.error("Passed non-interface type as an identifier map: " + identifier);
-                            assert fieldValue instanceof Interface;
-                            ((Interface)fieldValue).loadFields((Map<String, ?>)value);
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                            Logger.error("Couldn't get our own field? (" + field.getName() + ")");
-                        }
-                    } else if (value.getClass() == Boolean.class) {
-                        if (!(boolean)value) continue;
-                        loadField(field, offset + offsetPadding, identifier);
-                    } else {
-                        Logger.error("Illegal value passed to loadFields as an identifier value: "
-                                + value + " (" + value.getClass() + ")");
-                    }
+                int joined = offset + offsetPadding;
+                if (offsets.contains(joined)) {
+                    loadField(field, joined);
                     validatedIdentifiers++;
-                    if (validatedIdentifiers == identifiers.size()) continue;
+                    if (validatedIdentifiers == offsets.size()) continue;
                 }
                 offset++;
             }
 
-            if (validatedIdentifiers == identifiers.size()) break;
+            if (validatedIdentifiers == offsets.size()) break;
 
             ourClass = ourClass.getSuperclass();
             offsetPadding += ourFields.size() - 1;
         }
     }
 
-    private void loadField(@NotNull Field field, int offset, @NotNull String identifier) {
+    private void loadField(@NotNull Field field, int offset) {
         field.setAccessible(true);
 
         try {
@@ -188,29 +170,23 @@ public class Interface implements InvocationHandler {
                 if (ourValue != null) {
                     assert ourValue instanceof Interface;
                     ((Interface) ourValue).instance = value;
-                    fieldCache.put(identifier, ourValue);
+                    fieldCache.put(offset, ourValue);
                     return;
                 }
 
-                Logger.info("Instantiating field " + field.getName());
-                Class<?>[] defaultArgs = new Class[2];
-                defaultArgs[0] = Class.class;
-                defaultArgs[1] = Object.class;
-                Constructor<?> defaultConstructor = field.getType().getDeclaredConstructor(defaultArgs);
+                Constructor<?> defaultConstructor = field.getType().getDeclaredConstructors()[0];
+                assert defaultConstructor != null;
                 value = defaultConstructor.newInstance(value.getClass(), value);
             }
 
             field.set(this, value);
-            fieldCache.put(identifier, value);
+            fieldCache.put(offset, value);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
             Logger.error("Couldn't set our own field? (" + field.getName() + ")");
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            Logger.error("Couldn't get default interface constructor: " + e.getMessage());
         } catch (InvocationTargetException | InstantiationException e) {
             e.printStackTrace();
-            Logger.error("Couldn't call constructor: " + e.getMessage());
+            Logger.warning("Couldn't call " + field.getName() + " constructor: " + e);
         }
     }
 
@@ -220,8 +196,7 @@ public class Interface implements InvocationHandler {
 
         for (Field field : ourFields) {
 
-            String identifier = fieldIdentifiers.get(index);
-            Object fieldCacheVal = fieldCache.get(identifier);
+            Object fieldCacheVal = fieldCache.get(index);
 
             field.setAccessible(true);
 

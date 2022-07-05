@@ -15,7 +15,10 @@ public:
     ClientLoader() = default;
     void begin();
     void attach();
+    void defineClass(jobject classLoader, string name, vector<unsigned char> data);
     jobject getClassLoader() const;
+
+    jclass entryPoint;
     JavaVM *vm;
     JNIEnv *env;
 };

@@ -50,12 +50,13 @@ public class Entity extends Interface {
     public float prevDistanceWalkedModified;
     public float distanceWalkedModified;
     public float distanceWalkedOnStepModified;
+    public float fallDistance;
     public int nextStepDistance;
     public double lastTickPosX;
     public double lastTickPosY;
     public double lastTickPosZ;
     public float stepHeight;
-    public float noClip;
+    public boolean noClip;
     public float entityCollisionReduction;
     public Random rand;
     public int ticksExisted;

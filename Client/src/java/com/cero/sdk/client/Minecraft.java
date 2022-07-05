@@ -13,112 +13,13 @@ import java.util.concurrent.FutureTask;
 
 public class Minecraft extends Interface {
 
-    public Minecraft(@NotNull Object minecraft) throws ClassNotFoundException {
-        super(Class.forName(Client.shared.getMCName()), minecraft);
-    };
-
     public Minecraft(@NotNull Class<?> type, @NotNull Object minecraft) {
         super(type, minecraft);
     }
 
-    public static class Identifiers {
-        public final static String LOGGER                           = "logger";
-        public final static String MOJANG_PNG_LOCATION              = "location_mojang_png";
-        public final static String IS_RUNNING_ON_MAC                = "is_running_on_mac";
-        public final static String MEMORY_RESERVE                   = "memory_reserve";
-        public final static String MAC_DISPLAY_MODES                = "mac_display_modes";
-        public final static String FILE_RESOURCE_PACKS              = "file_resource_packs";
-        public final static String TWITCH_DETAILS                   = "twitch_details";
-        public final static String PROFILE_PROPERTIES               = "profile_properties";
-        public final static String CURRENT_SERVER_DATA              = "current_server_data";
-        public final static String RENDER_ENGINE                    = "render_engine";
-        public final static String MINECRAFT_INSTANCE               = "the_minecraft";
-        public final static String PLAYER_CONTROLLER                = "player_controller";
-        public final static String IS_FULLSCREEN                    = "is_fullscreen";
-        public final static String ENABLE_GL_ERROR_TRACKING         = "enable_gl_tracking";
-        public final static String HAS_CRASHED                      = "has_crashed";
-        public final static String CRASH_REPORTER                   = "crash_reporter";
-        public final static String DISPLAY_WIDTH                    = "display_width";
-        public final static String DISPLAY_HEIGHT                   = "display_height";
-        public final static String CONNECTED_TO_REALMS              = "connected_to_realms";
-        public final static String GAME_TIMER                       = "game_timer";
-        public final static String USAGE_SNOOPER                    = "usage_snooper";
-        public final static String THE_WORLD                        = "the_world";
-        public final static String RENDER_GLOBAL                    = "render_global";
-        public final static String RENDER_MANAGER                   = "render_manager";
-        public final static String RENDER_ITEM                      = "render_item";
-        public final static String ITEM_RENDERER                    = "item_renderer";
-        public final static String THE_PLAYER                       = "the_player";
-        public final static String RENDER_VIEW_ENTITY               = "render_view_entity";
-        public final static String POINTED_ENTITY                   = "pointed_entity";
-        public final static String EFFECT_RENDERER                  = "effect_renderer";
-        public final static String SESSION                          = "session";
-        public final static String IS_GAME_PAUSED                   = "is_game_paused";
-        public final static String FONT_RENDERER                    = "font_renderer";
-        public final static String STANDARD_GALACTIC_FONT_RENDERER  = "standard_galactic_font_renderer";
-        public final static String CURRENT_SCREEN                   = "current_screen";
-        public final static String LOADING_SCREEN                   = "loading_screen";
-        public final static String ENTITY_RENDERER                  = "entity_renderer";
-        public final static String LEFT_CLICK_COUNTER               = "left_click_counter";
-        public final static String TEMP_DISPLAY_WIDTH               = "temp_display_width";
-        public final static String TEMP_DISPLAY_HEIGHT              = "temp_display_height";
-        public final static String THE_INTEGRATED_SERVER            = "the_integrated_server";
-        public final static String GUI_ACHIEVEMENT                  = "gui_achievement";
-        public final static String IN_GAME_GUI                      = "in_game_gui";
-        public final static String SKIP_RENDER_WORLD                = "skip_render_world";
-        public final static String OBJECT_MOUSE_OVER                = "object_mouse_over";
-        public final static String GAME_SETTINGS                    = "game_settings";
-        public final static String MOUSE_HELPER                     = "mouse_helper";
-        public final static String MC_DATA_DIR                      = "mc_data_dir";
-        public final static String FILE_ASSETS                      = "file_assets";
-        public final static String LAUNCHED_VERSION                 = "launched_version";
-        public final static String PROXY                            = "proxy";
-        public final static String SAVE_LOADER                      = "save_loader";
-        public final static String DEBUG_FPS                        = "debug_fps";
-        public final static String RIGHT_CLICK_DELAY_TIMER          = "right_click_delay_timer";
-        public final static String SERVER_NAME                      = "server_name";
-        public final static String SERVER_PORT                      = "server_port";
-        public final static String IN_GAME_HAS_FOCUS                = "in_game_has_focus";
-        public final static String SYSTEM_TIME                      = "system_time";
-        public final static String JOIN_PLAYER_COUNTER              = "join_player_counter";
-        public final static String FRAME_TIMER                      = "frame_timer";
-        public final static String START_NANO_TIME                  = "start_nano_time";
-        public final static String JVM_64_BIT                       = "jvm_64_bit";
-        public final static String IS_DEMO                          = "is_demo";
-        public final static String MY_NETWORK_MANAGER               = "my_network_manager";
-        public final static String INTEGRATED_SERVER_IS_RUNNING     = "integrated_server_is_running";
-        public final static String MC_PROFILER                      = "mc_profiler";
-        public final static String DEBUG_CRASH_KEY_PRESS_TIME       = "debug_crash_key_press_time";
-        public final static String MC_RESOURCE_MANAGER              = "mc_resource_manager";
-        public final static String METADATA_SERIALIZER              = "metadata_serializer";
-        public final static String DEFAULT_RESOURCE_PACKS           = "default_resource_packs";
-        public final static String MC_DEFAULT_RESOURCE_PACK         = "mc_default_resource_pack";
-        public final static String MC_RESOURCE_PACK_REPOSITORY      = "mc_resource_pack_repository";
-        public final static String MC_LANGUAGE_MANAGER              = "mc_language_manager";
-        public final static String STREAM                           = "stream";
-        public final static String FRAME_BUFFER_MC                  = "frame_buffer_mc";
-        public final static String TEXTURE_MAP_BLOCKS               = "texture_map_blocks";
-        public final static String MC_SOUND_HANDLER                 = "mc_sound_handler";
-        public final static String MC_MUSIC_TICKER                  = "mc_music_ticker";
-        public final static String MOJANG_LOGO                      = "mojang_logo";
-        public final static String SESSION_SERVICE                  = "session_service";
-        public final static String SKIN_MANAGER                     = "skin_manager";
-        public final static String SCHEDULED_TASKS                  = "scheduled_tasks";
-        public final static String UNNAMED_1                        = "unnamed_1";
-        public final static String MC_THREAD                        = "mc_thread";
-        public final static String MODULE_MANAGER                   = "model_manager";
-        public final static String BLOCK_RENDER_DISPATCHER          = "block_render_dispatcher";
-        public final static String RUNNING                          = "running";
-        public final static String DEBUG                            = "debug";
-        public final static String UNNAMED_2                        = "unnamed_2";
-        public final static String UNNAMED_3                        = "unnamed_3";
-        public final static String UNNAMED_4                        = "unnamed_4";
-        public final static String RENDER_CHUNKS_MANY               = "render_chunks_many";
-        public final static String DEBUG_UPDATE_TIME                = "debug_update_time";
-        public final static String FPS_COUNTER                      = "fps_counter";
-        public final static String PREVIOUS_FRAME_TIME              = "previous_frame_time";
-        public final static String DEBUG_PROFILER_NAME              = "debug_profiler_name";
-    }
+    public Minecraft(@NotNull Object minecraft) throws ClassNotFoundException {
+        super(Class.forName(Client.shared.getMCName()), minecraft);
+    };
 
     public Object logger;
     public Object mojangPngLocation;

@@ -9,4 +9,9 @@ public class AbstractClientPlayer extends EntityPlayer {
     }
 
     public Object playerInfo;
+    public Object locationOfCape;
+    public long reloadCapeMS;
+    public boolean elytraOfCape;
+    public String nameClear;
+    public Object elytraTexture;
 }

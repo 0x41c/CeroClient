@@ -43,9 +43,6 @@ void ClientLoader::begin() {
         auto parser = jnif::parser::ClassFileParser(zipEntryData.data(), zipEntryData.size());
         string name = entry.substr(0, entry.length() - 6);
         string superClassName = parser.getSuperClassName();
-
-        Logger::get().info("Mapping " + name + "with superclass: " + superClassName);
-
         classDataMap.insert({ name, zipEntryData });
         superClassMap.insert({ name, superClassName });
     }
@@ -61,6 +58,7 @@ void ClientLoader::begin() {
             if (loadedClasses.find(superclass_name) != loadedClasses.end()) {
                 defineClass(classLoader, name, classData.second);
                 loadedClasses.insert(name);
+                Logger::get().info("Defined class \"" + name + "\"");
             }
         }
 

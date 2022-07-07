@@ -13,6 +13,6 @@
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_16" default="true" project-jdk-name="lunar-jdk" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/../build/java" />
+    <output url="file://$PROJECT_DIR$/../build" />
   </component>
 </project>

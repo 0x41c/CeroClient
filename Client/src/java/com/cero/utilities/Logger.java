@@ -6,24 +6,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import static com.cero.utilities.ClientConstants.clientHomeDir;
+import static com.cero.utilities.ClientConstants.logFileDir;
 
 public class Logger {
 
     static void logRaw(String message) {
+        // These should have been created and verified by the injector and loader.
         File homeDir = new File(clientHomeDir);
         if (!homeDir.exists()) System.exit(1);
-
-        String logsDirectory = clientHomeDir + File.separator + "logs";
-        File logsDir = new File(logsDirectory);
-
+        File logsDir = new File(ClientConstants.logsDir);
         if (!logsDir.exists()) System.exit(1);
 
-        String logsFile = logsDirectory + File.separator + "current.log";
-
         try {
-            FileWriter logs = new FileWriter(logsFile, true);
-            logs.write(message + "\n");
-            logs.close();
+            FileWriter logs = new FileWriter(logFileDir, true);
+            logs.write(message + "\n"); logs.close();
         } catch (IOException ignored) { System.exit(1);}
     }
 

@@ -1,5 +1,7 @@
 package com.cero.sdk.entity;
 
+import com.cero.sdk.entity.player.EntityPlayer;
+import com.cero.utilities.runtime.Interface;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -38,7 +40,7 @@ public class EntityLivingBase extends Entity {
     public float rotationYawHead;
     public float prevRotationYawHead;
     public float jumpMovementFactor;
-    public Object attackingPlayer;
+    public EntityPlayer attackingPlayer;
     public int recentlyHit;
     public boolean dead;
     public int entityAge;
@@ -60,9 +62,9 @@ public class EntityLivingBase extends Entity {
     public double newRotationYaw;
     public double newRotationPitch;
     public boolean potionsNeedUpdate;
-    public EntityLivingBase entityLivingToAttack;
+    public Interface entityLivingToAttack;
     public int revengeTimer;
-    public EntityLivingBase lastAttacker;
+    public Interface lastAttacker;
     public int lastAttackerTime;
     public float langMovementFactor;
     public int jumpTicks;

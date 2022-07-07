@@ -35,6 +35,7 @@ void ClientLoader::begin() {
 
     Zippy::ZipArchive clientArchive(jarPath);
     map<string, vector<unsigned char>> classDataMap;
+    map<string, vector<unsigned char>> interfaceDataMap;
     map<string, string> superClassMap;
 
     // Pre-process the classes into a map we can use
@@ -43,22 +44,41 @@ void ClientLoader::begin() {
         auto parser = jnif::parser::ClassFileParser(zipEntryData.data(), zipEntryData.size());
         string name = entry.substr(0, entry.length() - 6);
         string superClassName = parser.getSuperClassName();
-        classDataMap.insert({ name, zipEntryData });
-        superClassMap.insert({ name, superClassName });
+        if (parser.isInterface()) {
+             interfaceDataMap.insert({ name, zipEntryData });
+        } else {
+            classDataMap.insert({ name, zipEntryData });
+            superClassMap.insert({ name, superClassName });
+        }
+
     }
 
     set<string> loadedClasses = {
-            "java/lang/Object" // Default
+            "java/lang/Object",
+            "java/lang/Enum"
     };
 
+    bool definedInterfaces = false;
+
     while (!classDataMap.empty()) {
+        // One shot the interfaces rq
+        if (!definedInterfaces) {
+            for (auto const &interfaceData : interfaceDataMap) {
+                string interfaceName = interfaceData.first;
+                defineClass(classLoader, interfaceName, interfaceData.second);
+                Logger::get().info("Defined interface \"" + interfaceName + "\"");
+            }
+            definedInterfaces = true;
+        }
+
         for (auto const &classData : classDataMap) {
             string name = classData.first;
             string superclass_name = superClassMap.at(name);
             if (loadedClasses.find(superclass_name) != loadedClasses.end()) {
                 defineClass(classLoader, name, classData.second);
                 loadedClasses.insert(name);
-                Logger::get().info("Defined class \"" + name + "\"");
+                string type = superclass_name == "java/lang/Enum" ? "enum " : "class ";
+                Logger::get().info("Defined " + (type + name) + "\"");
             }
         }
 

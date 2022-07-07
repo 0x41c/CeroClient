@@ -5,15 +5,19 @@ import com.cero.sdk.client.Minecraft;
 import com.cero.utilities.Logger;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 
-public class Interface implements InvocationHandler {
+public class Interface {
 
     public Interface(@NotNull Class<?> type, Object instance) {
+
+        if (!typeCache.containsKey(this.getClass())) typeCache.put(this.getClass(), type);
+
         this.instance = instance;
         this.classData = type;
         this.remoteFields = List.of(type.getFields());
@@ -30,6 +34,8 @@ public class Interface implements InvocationHandler {
         this.ourMethods = List.of(ourClass.getDeclaredMethods()); // TODO: Implement methods
     }
 
+    static public HashMap<Class<?>, Class<?>> typeCache = new HashMap<>();
+
     public Object instance;
     public Class<?> classData;
     public List<Field> remoteFields;
@@ -40,6 +46,41 @@ public class Interface implements InvocationHandler {
     public List<Method> ourMethods;
     public HashMap<Integer, Object> fieldCache = new HashMap<>();
 
+
+    static public <T> T newInstance(Object ...arguments) {
+        Class<?> ourClass = MethodHandles.lookup().getClass();
+        T ourValue = null;
+        if (!typeCache.containsKey(ourClass))
+            Logger.error("Couldn't get internal class type as it has not been instantiated yet.");
+        try {
+            ArrayList<Class<?>> classList = new ArrayList<>();
+            for (Object arg : arguments) {
+                classList.add(arg.getClass());
+            }
+
+            Class<?> internalClass = typeCache.get(ourClass);
+            Constructor<?> constructor = internalClass.getDeclaredConstructor((Class<?>[])classList.toArray());
+            Object internalVal = constructor.newInstance(arguments);
+
+            Constructor<?> ourConstructor = ourClass.getDeclaredConstructors()[0];
+            ourValue = (T) ourConstructor.newInstance(internalClass, internalVal);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            Logger.error("Couldn't get constructor for " + ourClass.getName() + ", incorrect arguments");
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+            Logger.error("Constructor threw exception: " + e.getMessage());
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+            Logger.error("Tried calling constructor of abstract class: " + e.getMessage());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            Logger.error("Constructor is marked as private or is an inaccessible access level: " + e.getMessage());
+        }
+
+        assert ourValue != null;
+        return ourValue;
+    }
 
 
     // TODO: Deprecate public use of getFieldAt and setFieldAt.
@@ -172,6 +213,13 @@ public class Interface implements InvocationHandler {
         } catch (InvocationTargetException | InstantiationException e) {
             e.printStackTrace();
             Logger.warning("Couldn't call " + field.getName() + " constructor: " + e);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            Logger.warning("Error occurred in " + ourClass.getName() + " (" + instance.getClass().getName() + ")");
+            Logger.warning("Got wrong type while updating field: " + field.getName());
+            Logger.warning("Our field type: " + field.getType().getName());
+            Logger.warning("Remote field type: " + remoteFields.get(offset).getType());
+            Logger.warning("Offset: " + offset);
         }
     }
 
@@ -209,12 +257,4 @@ public class Interface implements InvocationHandler {
     }
 
     // TODO: Properly implement object swapping.
-    // WARNING: Don't use this without finishing its implementation, using it would be a sin.
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-//        if (!methods.contains(method)) return method.invoke(proxy, method);
-//        int methodIndex = methods.indexOf(method);
-
-        return null;
-    }
 }

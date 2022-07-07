@@ -1,8 +1,9 @@
 package com.cero;
 
-
+import com.cero.config.ConfigurationManager;
+import com.cero.module.Module;
+import com.cero.module.ModuleManager;
 import com.cero.sdk.client.Minecraft;
-import com.cero.sdk.client.entity.EntityPlayerSP;
 import com.cero.utilities.ClientConstants;
 import com.cero.utilities.Logger;
 
@@ -12,14 +13,20 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Client {
 
-    static public final Client shared = new Client();;
+    static public final Client shared = new Client();
     String mcName = "";
     ClassLoader mainClassLoader;
-    Minecraft minecraft;
-    boolean isRunning = true;
+    ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    ConfigurationManager configurationManager;
+    public Minecraft minecraft;
+    public boolean isRunning = true;
 
     static void entry() { // like a constructor, but easier. Called by loader
         Runnable threadEntry = new Runnable() {
@@ -119,41 +126,37 @@ public class Client {
     }
 
     void clientLoop() {
+        ModuleManager.populate();
 
-        boolean printedEnter = false;
+        configurationManager = new ConfigurationManager();
 
-        while (isRunning) {
+        AtomicInteger millisecondPartCounter = new AtomicInteger();
+
+        executor.scheduleAtFixedRate(() -> {
+
+            if (!isRunning) {
+                executor.shutdown();
+                return;
+            }
 
             minecraft.loadAllFields();
 
             if (minecraft.inWorld()) {
-                if (!printedEnter) {
-                    Logger.info("Entered world.");
-                    printedEnter = true;
-                }
-                EntityPlayerSP player = minecraft.thePlayer;
-                if (player.maxHurtTime > 0 && player.hurtTime == player.maxHurtTime) {
-                    Logger.info("was hit");
-                    player.motionX *= 0.4;
-                    player.motionZ *= 0.4;
-                }
-
-            } else {
-                if (printedEnter) {
-                    Logger.info("Exited world.");
-                    printedEnter = false;
+                for (Module module : ModuleManager.modules) {
+                    if (module.getEnabled()) {
+                        module.onUpdate();
+                    }
                 }
             }
 
             minecraft.applyChanges();
 
-            try {
-                Thread.sleep(25);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                Logger.info("Thread interrupted? " + e.toString());
+            if (millisecondPartCounter.getAndIncrement() > 40) { // One second
+                configurationManager.loadConfig();
+                millisecondPartCounter.set(0);
             }
-        }
+
+        }, 0 , 25, TimeUnit.MILLISECONDS);
     }
 
 }

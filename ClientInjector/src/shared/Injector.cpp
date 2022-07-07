@@ -46,6 +46,7 @@ string Injector::getDLLPath(argparse::ArgumentParser parser) {
 
     auto homePath = getHomePath();
     Ensure(homePath);
+    permissions(homePath, perms::all);
 
     // NOTE: Only do this for debug builds
     auto homeResourcePath = homePath + path_sep + HOMEDIR_RESOURCES_NAME;
@@ -53,6 +54,7 @@ string Injector::getDLLPath(argparse::ArgumentParser parser) {
     using namespace filesystem;
     auto options = copy_options::overwrite_existing | copy_options::recursive;
     copy(localResourcePath.c_str(), homeResourcePath, options); // Weird build glitch when both paths are same type
+    permissions(localResourcePath, perms::all);
     return homeResourcePath + path_sep + RESOURCE_CLIENTLOADER_NAME + DYNAMIC_EXT;
 
 }

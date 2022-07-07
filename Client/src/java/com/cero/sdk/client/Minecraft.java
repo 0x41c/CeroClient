@@ -1,7 +1,7 @@
 package com.cero.sdk.client;
 
-import com.cero.Client;
 import com.cero.sdk.client.entity.EntityPlayerSP;
+import com.cero.sdk.util.Timer;
 import com.cero.sdk.world.World;
 import com.cero.utilities.runtime.Interface;
 import org.jetbrains.annotations.NotNull;
@@ -16,10 +16,6 @@ public class Minecraft extends Interface {
     public Minecraft(@NotNull Class<?> type, @NotNull Object minecraft) {
         super(type, minecraft);
     }
-
-    public Minecraft(@NotNull Object minecraft) throws ClassNotFoundException {
-        super(Class.forName(Client.shared.getMCName()), minecraft);
-    };
 
     public Object logger;
     public Object mojangPngLocation;
@@ -40,7 +36,7 @@ public class Minecraft extends Interface {
     public int displayWidth;
     public int displayHeight;
     public boolean connectedToRealms;
-    public Object gameTimer;
+    public Timer gameTimer;
     public Object usageSnooper;
     public World theWorld;
     public Object renderGlobal;

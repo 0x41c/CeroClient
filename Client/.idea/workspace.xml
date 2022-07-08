@@ -10,31 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2424593d-9af3-4530-8ec3-36dc23aaac71" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/Build_Deploy_Client.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/com/cero/config/ConfigurationManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/com/cero/module/Module.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/com/cero/module/ModuleInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/com/cero/module/ModuleManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/com/cero/module/category/ModuleCategory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/com/cero/module/category/combat/Velocity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/com/cero/module/settings/ModuleSetting.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/com/cero/module/settings/types/RangeSetting.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/com/cero/module/settings/types/SettingType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/client/entity/EntityOtherPlayerMP.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/util/Timer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/com/cero/utilities/structures/IntRange.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/com/cero/utilities/structures/Range.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/client/Minecraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/client/Minecraft.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/entity/EntityLivingBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/sdk/entity/EntityLivingBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/utilities/ClientConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/utilities/ClientConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/utilities/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/utilities/Logger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/com/cero/utilities/runtime/Interface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/utilities/runtime/Interface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ClientInjector/src/shared/Injector.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientInjector/src/shared/Injector.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ClientLoader/src/ClientLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientLoader/src/ClientLoader.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +96,7 @@
       <workItem from="1657148812163" duration="200000" />
       <workItem from="1657149042452" duration="1015000" />
       <workItem from="1657150220288" duration="1371000" />
-      <workItem from="1657151855165" duration="4485000" />
+      <workItem from="1657151855165" duration="6976000" />
     </task>
     <servers />
   </component>

@@ -7,12 +7,11 @@
 
 #include <macOS/injector.h>
 #include <macOS/mip-mini/inject.h>
-#include <macOS/remoteExec/remoteExec.h>
 
 string exec(const string& cmd);
-vector<string> split(string phrase, const string& delimiter);
+vector<string> split(string phrase, string_view delimiter);
 
-bool MacOSInjector::inject(argparse::ArgumentParser parser, int pid) {
+bool MacOSInjector::inject(const argparse::ArgumentParser& parser, int pid) {
 
     string dllPath = getDLLPath(parser);
     mach_port_t task;
@@ -34,7 +33,7 @@ bool MacOSInjector::inject(argparse::ArgumentParser parser, int pid) {
     return !ret;
 }
 
-int MacOSInjector::getLunarPID(argparse::ArgumentParser parser) {
+int MacOSInjector::getLunarPID(const argparse::ArgumentParser& parser) {
     string output = exec("ps aux | grep optifine");
     vector<string> newList;
     double versionIDX = 0.0;
@@ -81,16 +80,16 @@ string exec(const string& cmd) {
     array<char, 128> buffer {};
     string result;
     unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.c_str(), "r"), pclose);
-    if (!pipe) {
+    if (!pipe)
         throw std::runtime_error("popen() failed!");
-    }
+
     while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
         result += buffer.data();
     }
     return result;
 }
 
-vector<string> split(string phrase, const string& delimiter) {
+vector<string> split(string phrase, string_view delimiter) {
     vector<string> list;
     size_t pos = 0;
     string token;

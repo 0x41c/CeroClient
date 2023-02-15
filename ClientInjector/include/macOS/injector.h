@@ -12,12 +12,11 @@ class MacOSInjector: public Injector {
 public:
 
     MacOSInjector() = default;
-    bool inject(argparse::ArgumentParser parser, int pid) final;
-    int getLunarPID(argparse::ArgumentParser parser) final;
 
-//private:
-//    kern_return_t injectToTask(mach_port_t task, string dllpath);
-//    kern_return_t getThreadPortForTask(mach_port_t task, mach_port_t *thread);
+    bool inject(const argparse::ArgumentParser& parser, int pid) final;
+
+    int getLunarPID(const argparse::ArgumentParser& parser) final;
+
 };
 
 #endif //CEROCLIENT_MINJECTOR_H

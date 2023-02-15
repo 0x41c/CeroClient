@@ -9,9 +9,14 @@
 
 class WindowsInjector: public Injector {
 public:
+
     WindowsInjector() = default;
-    bool inject(argparse::ArgumentParser parser, int pid) final;
-    int getLunarPID(argparse::ArgumentParser parser) final;
+    virtual ~WindowsInjector() = default;
+
+    bool inject(const argparse::ArgumentParser& parser, int pid) final;
+
+    int getLunarPID(const argparse::ArgumentParser& parser) final;
+
 };
 
 #endif //CEROCLIENT_WINJECTOR_H

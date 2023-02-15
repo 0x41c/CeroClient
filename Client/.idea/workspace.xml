@@ -10,7 +10,61 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2424593d-9af3-4530-8ec3-36dc23aaac71" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/Client.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/com/cero/client/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/com/cero/client/package-info.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ClientInjector/include/macOS/mip-mini/inject.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ClientInjector/mip-mini/Makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ClientInjector/mip-mini/injector/inject/inject.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ClientInjector/mip-mini/injector/inject/inject.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ClientInjector/mip-mini/injector/payloads/injected.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ClientInjector/mip-mini/injector/payloads/injected_arm64e.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ClientInjector/mip-mini/injector/payloads/injected_x86_64.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ClientInjector/mip-mini/injector/payloads/order" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/config/ConfigurationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/config/ConfigurationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/module/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/module/Module.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/module/ModuleInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/module/ModuleInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/module/ModuleManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/module/ModuleManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/module/category/ModuleCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/module/category/ModuleCategory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/module/category/combat/Velocity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/module/category/combat/Velocity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/module/settings/ModuleSetting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/module/settings/ModuleSetting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/module/settings/types/RangeSetting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/module/settings/types/RangeSetting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/module/settings/types/SettingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/module/settings/types/SettingType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/client/Minecraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/sdk/client/Minecraft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/client/entity/AbstractClientPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/sdk/client/entity/AbstractClientPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/client/entity/EntityOtherPlayerMP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/sdk/client/entity/EntityOtherPlayerMP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/client/entity/EntityPlayerSP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/sdk/client/entity/EntityPlayerSP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/sdk/entity/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/entity/EntityLivingBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/sdk/entity/EntityLivingBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/entity/player/EntityPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/sdk/entity/player/EntityPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/util/AxisAlignedBB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/sdk/util/AxisAlignedBB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/util/BlockPos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/sdk/util/BlockPos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/util/Timer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/sdk/util/Timer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/util/Vec3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/sdk/util/Vec3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/util/Vec3i.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/sdk/util/Vec3i.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/util/Vec4b.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/sdk/util/Vec4b.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/sdk/world/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/sdk/world/World.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/utilities/ClientConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/utilities/ClientConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/utilities/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/utilities/Logger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/utilities/runtime/Interface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/utilities/runtime/Interface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/utilities/structures/IntRange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/utilities/structures/IntRange.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/com/cero/utilities/structures/Range.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/com/cero/client/utilities/structures/Range.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInjector/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientInjector/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInjector/include/macOS/lookup/mh_functions.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInjector/include/macOS/lookup/mh_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInjector/resources/libRemoteExec.a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInjector/src/macOS/injector.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientInjector/src/macOS/injector.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInjector/src/macOS/payloads/payload.arm64e.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInjector/src/macOS/payloads/payload.x86_64.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientLoader/include/ClientLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientLoader/include/ClientLoader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientLoader/src/ClientLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientLoader/src/ClientLoader.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +80,7 @@
         <option value="AnnotationType" />
         <option value="Interface" />
         <option value="Enum" />
+        <option value="package-info" />
         <option value="Class" />
       </list>
     </option>
@@ -41,6 +96,15 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/java/com/cero/client/utilities/runtime/Interface.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectId" id="2BUF1Q3skD96zIgXbP2U0sTREPD" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -49,28 +113,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="Downloaded.Files.Path.Enabled" value="false" />
-    <property name="Repository.Attach.Annotations" value="false" />
-    <property name="Repository.Attach.JavaDocs" value="false" />
-    <property name="Repository.Attach.Sources" value="false" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Artifacts" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.3436402" />
-    <property name="settings.editor.selected.configurable" value="fileTemplates" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/Corban/projects/programming/mixed/cero-project/Client/pom.xml&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="ReaderModeSettings">
     <option name="showLigatures" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/java/com/cero/client" />
+      <recent name="$PROJECT_DIR$/src/java" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
@@ -96,7 +162,16 @@
       <workItem from="1657148812163" duration="200000" />
       <workItem from="1657149042452" duration="1015000" />
       <workItem from="1657150220288" duration="1371000" />
-      <workItem from="1657151855165" duration="6976000" />
+      <workItem from="1657151855165" duration="7386000" />
+      <workItem from="1658016382454" duration="2647000" />
+      <workItem from="1658115153039" duration="822000" />
+      <workItem from="1660268848615" duration="666000" />
+      <workItem from="1676338722707" duration="1643000" />
+      <workItem from="1676341355639" duration="875000" />
+      <workItem from="1676347504585" duration="433000" />
+      <workItem from="1676347955011" duration="5869000" />
+      <workItem from="1676425301024" duration="3794000" />
+      <workItem from="1676429175352" duration="2493000" />
     </task>
     <servers />
   </component>
@@ -113,6 +188,9 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

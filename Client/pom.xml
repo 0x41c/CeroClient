@@ -37,7 +37,11 @@
     <dependencies>
         <dependency><groupId>commons-io</groupId><artifactId>commons-io</artifactId><version>2.11.0</version></dependency>
         <dependency><groupId>com.google.code.gson</groupId><artifactId>gson</artifactId><version>2.9.0</version></dependency>
-        <dependency><groupId>org.jetbrains</groupId><artifactId>annotations</artifactId><version>RELEASE</version><scope>compile</scope></dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>24.0.0</version>
+        </dependency>
         <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl</artifactId></dependency>
         <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-assimp</artifactId></dependency>
         <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-glfw</artifactId></dependency>

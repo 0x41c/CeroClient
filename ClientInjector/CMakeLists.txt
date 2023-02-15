@@ -12,11 +12,8 @@ add_executable(ClientInjector ${ClientInjector_Source})
 
 IF(APPLE)
     # sections
-    #execute_process(COMMAND uname -m OUTPUT_VARIABLE arch) # Get architecture to build proper file.
-
-    # Temp linking
-    message(STATUS "Source dir: ${CMAKE_SOURCE_DIR}")
-    target_link_libraries(ClientInjector PRIVATE ${CMAKE_SOURCE_DIR}/ClientInjector/resources/libRemoteExec.a)
+    execute_process(COMMAND make WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/mip-mini)
+    target_link_libraries(ClientInjector PRIVATE ${CMAKE_CURRENT_LIST_DIR}/resources/inject.a)
 ENDIF()
 
 target_include_directories(ClientInjector PRIVATE include)

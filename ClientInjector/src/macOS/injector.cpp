@@ -6,6 +6,7 @@
 #ifdef MacOS
 
 #include <macOS/injector.h>
+#include <macOS/mip-mini/inject.h>
 #include <macOS/remoteExec/remoteExec.h>
 
 string exec(const string& cmd);
@@ -28,14 +29,13 @@ bool MacOSInjector::inject(argparse::ArgumentParser parser, int pid) {
      if ((ret = injectToTask(task, dllPath))) return false;
 #endif
 
-    ret = RemoteExecDlopen(task, dllPath.c_str());
-
-    cout << "Injection successful." << endl;
+    ret = inject_to_task(task, dllPath.c_str());
+    cout << "Injection successful. (" << to_string(ret) << ")" << endl;
     return !ret;
 }
 
 int MacOSInjector::getLunarPID(argparse::ArgumentParser parser) {
-    string output = exec("ps aux | grep LunarMain");
+    string output = exec("ps aux | grep optifine");
     vector<string> newList;
     double versionIDX = 0.0;
 
@@ -75,13 +75,6 @@ int MacOSInjector::getLunarPID(argparse::ArgumentParser parser) {
 
     return stoi(newList[1]);
 }
-
-//kern_return_t MacOSInjector::injectToTask(mach_port_t task, string dllpath) {
-//
-//
-//
-//    return KERN_SUCCESS;
-//}
 
 // Utility functions
 string exec(const string& cmd) {

@@ -9,7 +9,7 @@
 
 
 #ifdef MacOS
-typedef jint (*getcreatedvms_t)(JavaVM **, jsize, jsize *);
+using getcreatedvms_t = jint (*)(JavaVM **, jsize, jsize *);
 #else
 typedef jint (__stdcall *getcreatedvms_t)(JavaVM **, jsize, jsize *);
 #endif
@@ -18,15 +18,15 @@ typedef jint (__stdcall *getcreatedvms_t)(JavaVM **, jsize, jsize *);
 
 void ClientLoader::begin() {
     Logger::get("ClientLoader");
+
     attach();
+
     Logger::get().info("Finding JAR path");
 
     auto resourceDir = getHomePath() + path_sep + HOMEDIR_RESOURCES_NAME;
-    if (!exists(resourceDir))
-        Logger::get().error("Resource dir missing");
-
     auto jarPath = resourceDir + path_sep + RESOURCE_CLIENTJAR_NAME + ".jar";
-    if (!exists(jarPath))
+
+    if (!exists(resourceDir) || !exists(jarPath))
         Logger::get().error("Missing client jar. (" + jarPath + ")");
 
     Logger::get().info("Found jar");
@@ -34,9 +34,9 @@ void ClientLoader::begin() {
     jobject classLoader = getClassLoader();
 
     Zippy::ZipArchive clientArchive(jarPath);
-    map<string, vector<unsigned char>> classDataMap;
-    map<string, vector<unsigned char>> interfaceDataMap;
-    map<string, string> superClassMap;
+    map<string, vector<unsigned char>, less<>> classDataMap;
+    map<string, vector<unsigned char>, less<>> interfaceDataMap;
+    map<string, string, less<>> superClassMap;
 
     // Pre-process the classes into a map we can use
     for (auto const &entry : clientArchive.GetEntryNames(false)) {
@@ -44,16 +44,16 @@ void ClientLoader::begin() {
         auto parser = jnif::parser::ClassFileParser(zipEntryData.data(), zipEntryData.size());
         string name = entry.substr(0, entry.length() - 6);
         string superClassName = parser.getSuperClassName();
-        if (parser.isInterface()) {
-             interfaceDataMap.insert({ name, zipEntryData });
-        } else {
-            classDataMap.insert({ name, zipEntryData });
-            superClassMap.insert({ name, superClassName });
+        if (parser.isInterface())
+            interfaceDataMap.try_emplace(name, zipEntryData);
+        else {
+            classDataMap.try_emplace(name, zipEntryData);
+            superClassMap.try_emplace(name, superClassName);
         }
 
     }
 
-    set<string> loadedClasses = {
+    set<string, less<>> loadedClasses = {
             "java/lang/Object",
             "java/lang/Enum"
     };
@@ -63,22 +63,20 @@ void ClientLoader::begin() {
     while (!classDataMap.empty()) {
         // One shot the interfaces rq
         if (!definedInterfaces) {
-            for (auto const &interfaceData : interfaceDataMap) {
-                string interfaceName = interfaceData.first;
-                defineClass(classLoader, interfaceName, interfaceData.second);
+            for (auto const& [interfaceName, interfaceData] : interfaceDataMap) {
+                defineClass(classLoader, interfaceName, interfaceData);
                 Logger::get().info("Defined interface \"" + interfaceName + "\"");
             }
             definedInterfaces = true;
         }
 
-        for (auto const &classData : classDataMap) {
-            string name = classData.first;
-            string superclass_name = superClassMap.at(name);
-            if (loadedClasses.find(superclass_name) != loadedClasses.end()) {
-                defineClass(classLoader, name, classData.second);
-                loadedClasses.insert(name);
+        for (auto const& [className, classData] : classDataMap) {
+            string superclass_name = superClassMap.at(className);
+            if (loadedClasses.contains(superclass_name)) {
+                defineClass(classLoader, className, classData);
+                loadedClasses.insert(className);
                 string type = superclass_name == "java/lang/Enum" ? "enum " : "class ";
-                Logger::get().info("Defined " + (type + name) + "\"");
+                Logger::get().info("Defined " + (type + className) + "\"");
             }
         }
 
@@ -142,17 +140,17 @@ jobject ClientLoader::getClassLoader() const {
             threadGroup_cls, "enumerate", "([Ljava/lang/Thread;)I");
 
     jobject thread = env->CallStaticObjectMethod(thread_cls, thread_ct_mid);
-    jobject threadg = env->CallObjectMethod(thread, thread_tg_mid);
-    jint num_threads = env->GetIntField(threadg, threadG_nt_id);
+    jobject threadGroup = env->CallObjectMethod(thread, thread_tg_mid);
+    jint num_threads = env->GetIntField(threadGroup, threadG_nt_id);
 
     jobjectArray thread_array = env->NewObjectArray(num_threads, thread_cls, nullptr);
-    (void) env->CallIntMethod(threadg, threadG_en_id, thread_array);
+    (void) env->CallIntMethod(threadGroup, threadG_en_id, thread_array);
 
     jobject parent_thread = env->GetObjectArrayElement(thread_array, 0);
     jobject classLoader = env->CallObjectMethod(parent_thread, thread_ccl_mid);
 
     env->DeleteLocalRef(thread_cls); env->DeleteLocalRef(threadGroup_cls); env->DeleteLocalRef(thread);
-    env->DeleteLocalRef(threadg); env->DeleteLocalRef(thread_array); env->DeleteLocalRef(parent_thread);
+    env->DeleteLocalRef(threadGroup); env->DeleteLocalRef(thread_array); env->DeleteLocalRef(parent_thread);
 
     classLoader = env->NewGlobalRef(classLoader);
 
@@ -161,11 +159,11 @@ jobject ClientLoader::getClassLoader() const {
     return classLoader;
 }
 
-void ClientLoader::defineClass(jobject classLoader, string name, vector<unsigned char> data) {
+void ClientLoader::defineClass(jobject classLoader, const string& name, vector<unsigned char> data) {
     jclass defClass = env->DefineClass(name.c_str(), classLoader, reinterpret_cast<const jbyte *>(data.data()), data.size());
     if (defClass == nullptr)
         Logger::get().error("Couldn't define class " + name);
 
-    if (name == "com/cero/Client")
+    if (name == "com/cero/client/Client")
         entryPoint = defClass;
 }

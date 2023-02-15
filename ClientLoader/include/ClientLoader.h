@@ -15,7 +15,7 @@ public:
     ClientLoader() = default;
     void begin();
     void attach();
-    void defineClass(jobject classLoader, string name, vector<unsigned char> data);
+    void defineClass(jobject classLoader, const string& name, vector<unsigned char> data);
     jobject getClassLoader() const;
 
     jclass entryPoint;

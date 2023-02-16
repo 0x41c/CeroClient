@@ -3,6 +3,7 @@
 //
 
 
+#include <unistd.h>
 #include <ClientInjector.h>
 #include <argparse/argparse.h>
 
@@ -13,8 +14,6 @@ MacOSInjector injectorPlatform;
 #include <windows/injector.h>
 WindowsInjector injectorPlatform;
 #endif
-
-#include <unistd.h>
 
 /**
  * The main function. Takes two different arguments on macOS and windows.
